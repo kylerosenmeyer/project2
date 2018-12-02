@@ -1,3 +1,22 @@
-.list-group-item {
-  line-height: 2.5;
+html, body {
+  font-family: 'Acme', sans-serif;
 }
+
+.centerButton {
+  margin: 10px auto;
+}
+
+.headerRow {
+  text-align: center;
+}
+
+.col-md-4, .col-md-12 {
+  border: 2px solid gray;
+  text-align: center;
+}
+
+.useIngredient, .ingredient, .removeIngredient {
+  display: inline-block;
+}
+
+

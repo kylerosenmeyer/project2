@@ -1,24 +1,49 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
+  
+  app.post("/api/users/", function(req, res) {
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
+    let data = req.body
+    console.log(data)
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-};
+    db.User.create({
+
+      name: data.name
+    }, { include: [db.Ingredient, db.Recipe] }).then( function(result) {
+
+      res.json(result)
+
+    })
+  })
+
+  app.get("api/users/", function(req, res) {
+
+    let data = req.body
+    console.log(data)
+
+    db.User.create({
+
+      name: data.name
+    }, { include: [db.Ingredient, db.Recipe] }).then( function(result) {
+
+      res.json(result)
+
+    })
+  })
+
+  app.post("/api/add-ingredient/", function(req, res) {
+
+    let data = req.body
+    console.log(data)
+
+    db.Ingredient.create({
+
+      label: data.label
+    }, { include: [db.User] }).then( function(result) {
+
+      res.json(result)
+
+    })
+  })
+}
