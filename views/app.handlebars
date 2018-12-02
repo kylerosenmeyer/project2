@@ -2,6 +2,7 @@
   <div class="row headerRow">
     <div class="col-md-12">
       <h1>Fridge Two Table</h1>
+      <p id="userName" data-userid="{{userID}}">{{user}}</p><p id="titleDescription">'s Kitchen</p>
     </div>
   </div>
   <div class="row">
@@ -10,24 +11,24 @@
         <button type="button" class="addIngredient centerButton">Add Ingredient</button>
         <ul style="list-style-type:none">
             <li>
-                <button type="button" data-use="{{id}}" class="useIngredient">Use</button>
+                <button type="button" data-use="false" class="useIngredient">Use</button>
                 <p class="ingredient" id="eggs">Eggs</p>
             </li>
             <li>
-                <button type="button" data-use="{{id}}" class="useIngredient">Use</button>
+                <button type="button" data-use="false" class="useIngredient">Use</button>
                 <p class="ingredient" id="milk">Milk</p>
             </li>
             <li>
-                <button type="button" data-use="{{id}}" class="useIngredient">Use</button>
+                <button type="button" data-use="false" class="useIngredient">Use</button>
                 <p class="ingredient" id="pasta">Pasta</p>
             </li>
             <li>
-                <button type="button" data-use="{{id}}" class="useIngredient">Use</button>
+                <button type="button" data-use="false" class="useIngredient">Use</button>
                 <p class="ingredient" id="cheese">Cheese</p>
             </li>
             {{#each Ingredient}}
             <li>
-                <button type="button" data-use="{{id}}" class="useIngredient">Use</button>
+                <button type="button" data-id="{{id}}" data-use="{{used}}" class="useIngredient notused">Use</button>
                 <p class="ingredient" id={{id}}>{{label}}</p>
                 <button type="button" data-remove="{{id}}" class="removeIngredient">Remove</button>
             </li>

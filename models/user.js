@@ -6,18 +6,14 @@ module.exports = function(sequelize, DataTypes) {
             validate: { len: [1, 100] }
     }})
 
-    User.associate = function(db) {
+    User.associate = function(models) {
     
-        User.hasMany(db.Ingredient, {
+        User.hasMany( models.Ingredient, {
             onDelete: "cascade"
-            })
-    }
-
-    User.associate = function(db) {
-    
-        User.hasMany(db.Recipe, {
+            }),
+        User.hasMany( models.Recipe, {
             onDelete: "cascade"
-            })
+        })
     }
 
     return User

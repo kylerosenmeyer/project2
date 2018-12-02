@@ -19,4 +19,12 @@ html, body {
   display: inline-block;
 }
 
+.used {
+  background-color: yellow;
+}
+
+.notused {
+  background-color: white;
+}
+
 

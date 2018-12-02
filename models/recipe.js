@@ -7,9 +7,9 @@ module.exports = function(sequelize, DataTypes) {
         url: DataTypes.STRING
     })
   
-    Recipe.associate = function(db) {
+    Recipe.associate = function(models) {
        
-        Recipe.belongsTo(db.User, {
+        Recipe.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
             }
