@@ -8,13 +8,13 @@ module.exports = function(sequelize, DataTypes) {
         },  
         used: {
             type: DataTypes.BOOLEAN,
-            default: true
+            defaultValue: false
         }
     })
   
-    Ingredient.associate = function(db) {
+    Ingredient.associate = function(models) {
        
-        Ingredient.belongsTo(db.User, {
+        Ingredient.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
             }

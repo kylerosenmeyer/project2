@@ -4,7 +4,9 @@ const
     handlebars = require("express-handlebars"),
     db = require("./models"),
     app = express(),
-    PORT = process.env.PORT || 3000
+    PORT = process.env.PORT || 3000,
+    apiRoutes = require("./routes/apiRoutes.js"),
+    htmlRoutes = require("./routes/htmlRoutes.js")
 
 // Middleware
 app.use(express.urlencoded({ extended: false }))
@@ -16,8 +18,8 @@ app.engine("handlebars", handlebars( { defaultLayout: "main" } ) )
 app.set("view engine", "handlebars")
 
 // Routes
-require("./routes/apiRoutes")(app)
-require("./routes/htmlRoutes")(app)
+apiRoutes(app)
+htmlRoutes(app)
 
 let syncOptions = { force: false }
 
