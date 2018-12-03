@@ -19,12 +19,17 @@ html, body {
   display: inline-block;
 }
 
-.used {
+.used, .saved {
   background-color: yellow;
 }
 
-.notused {
+.notused, .notsaved {
   background-color: white;
+}
+
+.recipeImg {
+  height: 50px;
+  width: auto;
 }
 
 

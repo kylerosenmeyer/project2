@@ -11,42 +11,45 @@
         <button type="button" class="addIngredient centerButton">Add Ingredient</button>
         <ul style="list-style-type:none">
             <li>
-                <button type="button" data-use="false" class="useIngredient">Use</button>
-                <p class="ingredient" id="eggs">Eggs</p>
+                <button type="button" data-use="false" class="useIngredient eggs">Use</button>
+                <p class="ingredient" data-id="eggs">Eggs</p>
             </li>
             <li>
-                <button type="button" data-use="false" class="useIngredient">Use</button>
-                <p class="ingredient" id="milk">Milk</p>
+                <button type="button" data-use="false" class="useIngredient milk">Use</button>
+                <p class="ingredient" data-id="milk">Milk</p>
             </li>
             <li>
-                <button type="button" data-use="false" class="useIngredient">Use</button>
-                <p class="ingredient" id="pasta">Pasta</p>
+                <button type="button" data-use="false" class="useIngredient pasta">Use</button>
+                <p class="ingredient" data-id="pasta">Pasta</p>
             </li>
             <li>
-                <button type="button" data-use="false" class="useIngredient">Use</button>
-                <p class="ingredient" id="cheese">Cheese</p>
+                <button type="button" data-use="false" class="useIngredient cheese">Use</button>
+                <p class="ingredient" data-id="cheese">Cheese</p>
             </li>
             {{#each Ingredient}}
-            <li>
-                <button type="button" data-id="{{id}}" data-use="{{used}}" class="useIngredient notused">Use</button>
-                <p class="ingredient" id={{id}}>{{label}}</p>
-                <button type="button" data-remove="{{id}}" class="removeIngredient">Remove</button>
-            </li>
+                <li>
+                    <button type="button" data-use="{{used}}" class="useIngredient notused {{id}}">Use</button>
+                    <p class="ingredient" data-id={{id}} id={{id}}>{{label}}</p>
+                    <button type="button" data-remove="{{id}}" class="removeIngredient">Remove</button>
+                </li>
             {{/each}}
         </ul>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" id="recipeResults">
        <button class="getRecipes centerButton">Get Recipes</button>
     </div>
     <div class="col-md-4">
-      {{#each Recipe}}
-        <li>
-            <h5 id={{id}}>{{label}}</h5>
-            <img class="recipeImg" src="{{image}}">
-            <button type="button" class="openRecipe">Open Recipe</button>
-            <button type="button" data-remove="{{id}}" class="removeRecipe">Remove</button>
-        </li>
+        <button class="storeRecipes centerButton">Store Recipes</button>
+        <ul style="list-style-type:none">
+        {{#each Recipe}}
+            <li>
+                <h5 id={{id}}>{{label}}</h5>
+                <img class="recipeImg" src="{{image}}">
+                <button type="button" class="openRecipe" data-src="{{url}}">Open Recipe</button>
+                <button type="button" data-remove="{{id}}" class="removeRecipe">Remove</button>
+            </li>
         {{/each}}
+        </ul>
     </div>
   </div>
 </div>

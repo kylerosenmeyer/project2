@@ -1,4 +1,6 @@
-const db = require("../models")
+const 
+    db = require("../models"),
+    axios = require("axios")
 
 module.exports = function(app) {
   
@@ -36,6 +38,102 @@ module.exports = function(app) {
 
     db.Ingredient.destroy({ 
                             where: { label: ingredient } 
+                          } 
+                          ).then( function(result) { 
+                            res.json(result) 
+                          })
+  })
+
+  //*This is the route to get the recipes from the api
+  app.post("/api/get-recipes/", function(req, res) {
+
+    //Build the api query. First build the q parameter
+    let data = JSON.parse(req.body.cook),
+        q = "q=",
+        recipeArray = []
+
+    console.log("\nincoming array: ",data)
+
+
+    for ( let i=0; i<data.length; i++ ) {
+
+      if ( i < (data.length - 1) ) {
+        q += data[i] + "+"
+      } else q+= data[i]
+    } 
+
+    console.log("\nq:",q)
+    //At this point the q parameter is constructed. Now build the rest of the api query.
+
+    let appID = "8417f32f",
+        appKey = "cdc0b36554522a88a0242b7ea30e9837",
+        query = "https://api.edamam.com/search?" + q + "&app_id=" + appID + "&app_key=" + appKey + "&from=0&to=5"
+
+    console.log("query:",query)
+
+    //Make the API Call
+    axios.get(query)
+         .then( function(response) { 
+
+            let Recipe = response.data.hits
+                
+
+            for ( let i=0; i<Recipe.length; i++ ) {
+
+              console.log("\n")
+              console.log(Recipe[i].recipe.label)
+              console.log(Recipe[i].recipe.image)
+              console.log(Recipe[i].recipe.url)
+              console.log(Recipe[i].recipe.ingredientLines)
+              console.log(Recipe[i].recipe.calories)
+              console.log(Recipe[i].recipe.totalTime)
+              console.log("\n")
+
+              let recipe = {
+                label: Recipe[i].recipe.label,
+                image: Recipe[i].recipe.image,
+                url: Recipe[i].recipe.url,
+                ingredients: Recipe[i].recipe.ingredientLines,
+                calories: Recipe[i].recipe.calories,
+                time: Recipe[i].recipe.totalTime
+              }
+
+              recipeArray.push(recipe)
+              
+            }
+            res.send(recipeArray)
+          })
+         .catch( function (error) { console.log(error) } )
+  })
+  //*This is the route to store a Recipe to the User's list
+  app.post("/api/store-recipe/", function(req, res) {
+
+    let data = JSON.parse(req.body.save)
+    console.log("data: ",data)
+
+    function storeFavorites(data) {
+      for ( let i=0; i<data.length; i++ ) {
+
+        db.Recipe.create({
+                          label: data[i].label,
+                          image: data[i].image,
+                          url: data[i].url,
+                          UserId: data[i].UserID
+                          }
+                          )
+      }
+    }
+    storeFavorites(data)
+    res.end()
+  })
+
+  //*This is the route to remove a Recipe from a User's List
+  app.delete("/api/remove-recipe/:recipe", function(req, res) {
+
+    let recipe = req.params.recipe
+
+    db.Recipe.destroy({ 
+                            where: { label: recipe } 
                           } 
                           ).then( function(result) { 
                             res.json(result) 

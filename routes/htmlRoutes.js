@@ -13,14 +13,15 @@ module.exports = function(app) {
     let user = req.params.user
     // console.log("user: ",user)
       db.User.findOne(
-        { where: { name: user }, include: [db.Ingredient] }
+        { where: { name: user }, include: [db.Ingredient, db.Recipe] }
         ).then(function(results) {
 
-          console.log("ingredients: ",results.Ingredients)
+          // console.log("ingredients: ",results.Ingredients)
           res.render("app", {
             user: user,
             userID: results.id,
-            Ingredient: results.Ingredients
+            Ingredient: results.Ingredients,
+            Recipe: results.Recipes
           })
         })
   })
