@@ -110,7 +110,7 @@ $(".getRecipes").click( function() {
       wrapper.addClass("apiRecipe")
       wrapper.append("<p data-id=\"" + i + "\" class=\"recipeLabel\">" + response[i].label + "</p>")
       wrapper.append("<img data-id=\"" + i + "\" class=\"recipeImg\" src=\"" + response[i].image + "\">")
-      wrapper.append("<a data-id=\"" + i + "\" class=\"recipeLink\" target=\"blank\" href=\"" + response[i].url + "\"> Cook This Recipe </a>")
+      wrapper.append("<button data-id=\"" + i + "\" class=\"openRecipe\" type=\"button\" data-src=\"" + response[i].url + "\"> Open Recipe </a>")
       wrapper.append("<button data-id=\"" + i + "\" data-saved=\"false\" type=\"button\" class=\"saveRecipe saveBtn notsaved\"><i class=\"fas fa-heart\"></i></button>")
       $("#recipeResults").append(wrapper)
     }
@@ -130,6 +130,27 @@ $(".getRecipes").click( function() {
         }
     for ( let i=0; i<hearts.length; i++ ) {
       hearts[i].addEventListener("click", saveRecipe)
+    }
+
+    //*Event Listener for opening a recipe
+    let recipes = document.getElementsByClassName("openRecipe"),
+        openRecipe = function() {
+
+          let recipeID = $(this).attr("data-id"),
+              url = $(this).attr("data-src"),
+              title = $("p[data-id=" + recipeID + "]").text()
+      
+          $(".modal-title").html(title)
+
+          $(".modal-body").append("<p> Ingredients List Goes Here </p>")
+          $(".modal-body").append("<p> Then the List of additional ingredients goes below </p>")
+          $(".modal-recipe").attr("data-src", url)
+          //Display the modal warning the user that the train info is incomplete.
+          $("#recipeModal").modal("toggle")
+          
+        }
+    for ( let i=0; i<hearts.length; i++ ) {
+      recipes[i].addEventListener("click", openRecipe)
     }
    })
 })
@@ -187,11 +208,40 @@ $(".removeRecipe").click( function() {
 })
 
 //*Event Listener for opening a saved Recipe
-$(".openRecipe").click( function() {
-  let url = $(this).attr("data-src")
-  
-  window.open( url, '_blank')
+$(".openSavedRecipe").click( function() {
+
+  let recipeID = $(this).attr("data-id"),
+      url = $(this).attr("data-src"),
+      title = $("h5[data-id=" + recipeID + "]").text()
+
+  $(".modal-title").html(title)
+
+  $(".modal-body").append("<p> Ingredients List Goes Here </p>")
+  $(".modal-body").append("<p> Then the List of additional ingredients goes below </p>")
+  $(".modal-recipe").attr("data-src", url)
+  //Display the modal warning the user that the train info is incomplete.
+  $("#recipeModal").modal("toggle")
 })
+
+$(".modal-recipe").click( function() {
+
+  let url = $(this).attr("data-src")
+  window.open( url, "_blank" )
+})
+
+$(".modal-close").click( function() {
+  //!Incomplete Code
+  // let modalBody = document.getElementsByClassName(".modal-body");
+  // modalBody.parentNode.removeChild(item)
+
+  $(".modal-title,").html(" ")  
+  $(".modal-recipe").attr("data-src", " ")
+})
+
+
+//This code snippet focuses onto the modal when it displays (taken from bootstrap documentation)
+$("#recipeModal").on("shown.bs.modal", function () { $("#recipeModal").trigger("focus") } )
+
 
 
 

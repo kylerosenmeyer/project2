@@ -1,3 +1,4 @@
+//*This is a boiler plate file created by the Sequelize ORM.
 "use strict";
 
 var fs = require("fs");

@@ -32,4 +32,20 @@ html, body {
   width: auto;
 }
 
+/*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
+.fade.in {
+  opacity: 1;
+}
+/*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+/*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
+.modal-backdrop.in {
+  opacity: 0.5;
+}
+
 
