@@ -20,7 +20,7 @@ $(".useIngredient").click( function() {
   }
 })
 
-//*Event Listener for Toggling an Ingredient between "used" and "notused"
+//*Event Listener for creating new users
 $(".login").click( function() {
 
   console.log(".login clicked")
@@ -76,7 +76,7 @@ $(".removeIngredient").click( function() {
 $(".getRecipes").click( function() {
 
   console.log(".getRecipes clicked")
-
+  //Empty array where recipes will be stored
   let selections = []
 
   $(".ingredient").each( function() {
