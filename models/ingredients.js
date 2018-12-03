@@ -1,5 +1,7 @@
+//*This is the model for the ingredients table.
 module.exports = function(sequelize, DataTypes) {
 
+    //Defines the Model
     let Ingredient = sequelize.define("Ingredient", {
         label: {
             type: DataTypes.STRING,
@@ -11,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: false
         }
     })
-    // Associating ingredients with each user
+    // Associate ingredients with the user
     Ingredient.associate = function(models) {
        
         Ingredient.belongsTo(models.User, {

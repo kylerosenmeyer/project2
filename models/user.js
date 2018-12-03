@@ -1,4 +1,7 @@
+//*This is the model for the users table.
 module.exports = function(sequelize, DataTypes) {
+    
+    //Defines the Model
     let User = sequelize.define("User", {
         name: {
             type: DataTypes.STRING,
