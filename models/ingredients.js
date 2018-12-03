@@ -11,9 +11,9 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: false
         }
     })
-  
+  // Associating ingredients with each user
     Ingredient.associate = function(models) {
-       
+        
         Ingredient.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
