@@ -113,7 +113,13 @@ $(".getRecipes").click( function() {
       wrapper.append("<button data-id=\"" + i + "\" class=\"openRecipe\" type=\"button\" data-src=\"" + response[i].url + "\"> Open Recipe </a>")
       wrapper.append("<button data-id=\"" + i + "\" data-saved=\"false\" type=\"button\" class=\"saveRecipe saveBtn notsaved\"><i class=\"fas fa-heart\"></i></button>")
       $("#recipeResults").append(wrapper)
+      //bt-  console logging the responses in hopes we can somehow take the responses, make them into variables,
+      //to inject into the module wrappers when selectin 'open recipe?'?
+      console.log('recipe label = ' + response[i].label);
+      console.log('recipe image = ' + response[i].image);
+      
     }
+
 
     //*Event Listener for saving a recipe
     let hearts = document.getElementsByClassName("saveRecipe"),
