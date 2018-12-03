@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         image: DataTypes.STRING,
         url: DataTypes.STRING
     })
-  
+    // Associating recipes with each user
     Recipe.associate = function(models) {
        
         Recipe.belongsTo(models.User, {

@@ -5,12 +5,13 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: { len: [1, 100] }
     }})
-
+    // Associating users to ingredients and recipes
     User.associate = function(models) {
-    
+        // When a user is deleted, also delete any associated ingredients  
         User.hasMany( models.Ingredient, {
             onDelete: "cascade"
             }),
+        // When a user is deleted, also delete any associated recipes 
         User.hasMany( models.Recipe, {
             onDelete: "cascade"
         })
