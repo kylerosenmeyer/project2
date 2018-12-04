@@ -76,8 +76,8 @@
         <ul style="list-style-type:none">
         {{#each Recipe}}
             <li>
-                <h5 id={{id}}>{{label}}</h5>
-                <img class="recipeImg" src="{{image}}">
+                <h5 data-id={{id}}>{{label}}</h5>
+                <img class="recipeImg" data-id="{{id}}" src="{{image}}">
                 <button type="button" class="openSavedRecipe" data-id="{{id}}" data-src="{{url}}">Open Recipe</button>
                 <button type="button" data-remove="{{id}}" class="removeRecipe">Remove</button>
             </li>

@@ -1,5 +1,8 @@
 //Event Listeners Go Here
 console.log("events.js loaded")
+//set a two arrays at the gloabl scope to be used later in dynamic events with the recipe results.
+let ingredientStorage = [],
+    userIngredients = []
 
 //*Event Listener for Toggling an Ingredient between "used" and "notused"
 $(".useIngredient").click( function() {
@@ -76,6 +79,10 @@ $(".removeIngredient").click( function() {
 //*Event Listener for getting the recipes from the api.
 $(".getRecipes").click( function() {
 
+  $(".apiRecipe").remove()
+  userIngredients = []
+  ingredientStorage = []
+
   console.log(".getRecipes clicked")
   //Empty array where recipes will be stored
   let selections = []
@@ -89,7 +96,7 @@ $(".getRecipes").click( function() {
 
     if ( matchedAttr === "true" ) {
 
-      selections.push( $(this).text() )
+      selections.push( $(this).text().toLowerCase() )
     }
   })
   console.log(selections)
@@ -107,36 +114,28 @@ $(".getRecipes").click( function() {
     data: request
   }).then( function(response) { 
 
-    console.log(response)
+    console.log("api response: ",response)
 
-    for ( let i=0; i<response.length; i++ ) {
+    userIngredients = response[0]
+    console.log("user ingredients: ",userIngredients)
 
+    for ( let i=1; i<response.length; i++ ) {
 
-      let rArray = "array" + i, 
-          sArray = {}
-      console.log('rArray', rArray)
-      //sArray[rArray] = response[i].ingredients
-      console.log(response[i].ingredients)
-      //sArray.array
+      let ingredientArray = response[i].ingredients,
+          index = i-1
+          
+      ingredientStorage.push(ingredientArray)
+    
 
-      sArray[rArray] = response[i].calories
-      console.log(response[i].calories)
-      //sArray[rArray]+= response[i].time
-      console.log('stash object', sArray.rArray)
-
-
+      console.log(ingredientStorage)
+  
       let wrapper = $("<div>")
       wrapper.addClass("apiRecipe")
-      wrapper.append("<p data-id=\"" + i + "\" class=\"recipeLabel\">" + response[i].label + "</p>")
-      wrapper.append("<img data-id=\"" + i + "\" class=\"recipeImg\" src=\"" + response[i].image + "\">")
-      wrapper.append("<button data-id=\"" + i + "\" class=\"openRecipe\" type=\"button\" data-src=\"" + response[i].url + "\"> Open Recipe </a>")
-      wrapper.append("<button data-id=\"" + i + "\" data-saved=\"false\" type=\"button\" class=\"saveRecipe saveBtn notsaved\"><i class=\"fas fa-heart\"></i></button>")
-      $("#recipeResults").append(wrapper)
-      //bt-  console logging the responses in hopes we can somehow take the responses, make them into variables,
-      //to inject into the module wrappers when selectin 'open recipe?'?
-      console.log('recipe label = ' + response[i].label);
-      console.log('recipe image = ' + response[i].image);
-      
+      wrapper.append("<p data-id=\"" + index + "\" class=\"recipeLabel\">" + response[i].label + "</p>")
+      wrapper.append("<img data-id=\"" + index + "\" class=\"recipeImg\" src=\"" + response[i].image + "\">")
+      wrapper.append("<button data-id=\"" + index + "\" class=\"openRecipe\" type=\"button\" data-src=\"" + response[i].url + "\"> Open Recipe </a>")
+      wrapper.append("<button data-id=\"" + index + "\" data-saved=\"false\" type=\"button\" class=\"saveRecipe saveBtn notsaved\"><i class=\"fas fa-heart\"></i></button>")
+      $("#recipeResults").append(wrapper)  
     }
 
 
@@ -163,14 +162,44 @@ $(".getRecipes").click( function() {
 
           let recipeID = $(this).attr("data-id"),
               url = $(this).attr("data-src"),
-              title = $("p[data-id=" + recipeID + "]").text()
-      
-          $(".modal-title").html(title)
+              title = $("p[data-id=" + recipeID + "]").text(),
+              recipeImage = $("img[data-id=" + recipeID + "]").attr("src"),
+              recipeIngredients = ingredientStorage[recipeID],
+              ingredientList = "",
+              counter = 0
 
-          $(".modal-body").append("<p> Ingredients List Goes Here </p>")
-          $(".modal-body").append("<p> Then the List of additional ingredients goes below </p>")
+          let compareIngredients = function() {
+              if ( counter < userIngredients.length ) {
+
+                console.log("user ingredient: ",userIngredients[counter])
+                console.log("counter: ",counter)
+    
+                for ( let i=0; i<recipeIngredients.length; i++ ) {
+
+                  if ( recipeIngredients[i].includes( userIngredients[counter] ) ) {
+  
+                    ingredientList += "<li class=\"green\">" + recipeIngredients[i] + "</li>"
+                    recipeIngredients.splice(i,1)
+                  } 
+                } 
+    
+                counter++
+                compareIngredients()
+              }
+          }
+
+          compareIngredients()
+
+          for ( let i=0; i<recipeIngredients.length; i++ ) {
+
+            ingredientList += "<li>" + recipeIngredients[i] + "</li>"
+          }
+          
+          $(".modal-ingredients").html(ingredientList)
+          $(".modal-title").html(title)
+          $(".modal-image").attr("src", recipeImage)
           $(".modal-recipe").attr("data-src", url)
-          //Display the modal warning the user that the train info is incomplete.
+          //Triggle Modal
           $("#recipeModal").modal("toggle")
           
         }
@@ -237,16 +266,17 @@ $(".openSavedRecipe").click( function() {
 
   let recipeID = $(this).attr("data-id"),
       url = $(this).attr("data-src"),
-      title = $("h5[data-id=" + recipeID + "]").text()
+      title = $("h5[data-id=" + recipeID + "]").text(),
+      recipeImage = $("img[data-id=" + recipeID + "]").attr("src")
 
   $(".modal-title").html(title)
-
-  $(".modal-body").append("<p> Ingredients List Goes Here </p>")
-  $(".modal-body").append("<p> Then the List of additional ingredients goes below </p>")
+  $(".modal-image").attr("src", recipeImage)
   $(".modal-recipe").attr("data-src", url)
-  //Display the modal warning the user that the train info is incomplete.
+  //Triggle Modal
   $("#recipeModal").modal("toggle")
 })
+      
+          
 
 $(".modal-recipe").click( function() {
 
@@ -255,11 +285,6 @@ $(".modal-recipe").click( function() {
 })
 
 $(".modal-close").click( function() {
-  //!Incomplete Code
-  // let modalBody = document.getElementsByClassName(".modal-body");
-  // modalBody.parentNode.removeChild(item)
-
-  $(".modal-title,").html(" ")  
   $(".modal-recipe").attr("data-src", " ")
 })
 

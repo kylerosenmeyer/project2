@@ -50,7 +50,8 @@ module.exports = function(app) {
     //Build the api query. First build the q parameter
     let data = JSON.parse(req.body.cook),
         q = "q=",
-        recipeArray = []
+        recipeArray = [],
+        userIngredients = []
 
     console.log("\nincoming array: ",data)
 
@@ -59,8 +60,15 @@ module.exports = function(app) {
 
       if ( i < (data.length - 1) ) {
         q += data[i] + "+"
-      } else q+= data[i]
-    } 
+        userIngredients.push(data[i])
+      } else { 
+        q += data[i]
+        userIngredients.push(data[i])
+      } 
+    }
+
+    recipeArray.push(userIngredients)
+    console.log("first stage recipeArray: ",recipeArray)
 
     console.log("\nq:",q)
     //At this point the q parameter is constructed. Now build the rest of the api query.
@@ -99,8 +107,7 @@ module.exports = function(app) {
                 time: Recipe[i].recipe.totalTime
               }
 
-              recipeArray.push(recipe)
-              
+              recipeArray.push(recipe)              
             }
             res.send(recipeArray)
           })

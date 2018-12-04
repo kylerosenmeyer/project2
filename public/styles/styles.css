@@ -19,6 +19,11 @@ html, body {
   display: inline-block;
 }
 
+.green {
+  color: darkgreen;
+  font-weight: bold;
+}
+
 .used, .saved {
   background-color: yellow;
 }
