@@ -25,6 +25,8 @@ app.use(express.static("public"))
 
 // Handlebars
 // Serve static content for the app from the "public" directory.
+
+// this is why main is loaded 
 app.engine("handlebars", handlebars( { defaultLayout: "main" } ) )
 app.set("view engine", "handlebars")
 
