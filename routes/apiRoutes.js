@@ -72,6 +72,7 @@ module.exports = function(app) {
     console.log("query:",query)
 
     //Make the API Call
+    //ajax does not exist on the back-end
     axios.get(query)
          .then( function(response) { 
 

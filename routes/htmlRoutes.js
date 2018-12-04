@@ -17,6 +17,8 @@ module.exports = function(app) {
         ).then(function(results) {
 
           // console.log("ingredients: ",results.Ingredients)
+          
+          //these exist in {{ in app. handlebars}}
           res.render("app", {
             user: user,
             userID: results.id,

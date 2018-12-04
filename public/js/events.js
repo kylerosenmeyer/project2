@@ -34,6 +34,7 @@ $(".login").click( function() {
     url: "/api/users",
     method: "POST",
     data: newUser
+    // this refreshes the page and makes the login button load the next page
   }).then( function() { location.href = nextPage } )
 })
 
@@ -97,14 +98,32 @@ $(".getRecipes").click( function() {
   console.log(request)
 
   $.ajax({
+    //where you want to go
     url: "/api/get-recipes/",
+   // type of task
     method: "POST",
+    // has to be an object in JSON format >ajax = JSON
+    //{prop:value]}
     data: request
   }).then( function(response) { 
 
     console.log(response)
 
     for ( let i=0; i<response.length; i++ ) {
+
+
+      let rArray = "array" + i, 
+          sArray = {}
+      console.log('rArray', rArray)
+      //sArray[rArray] = response[i].ingredients
+      console.log(response[i].ingredients)
+      //sArray.array
+
+      sArray[rArray] = response[i].calories
+      console.log(response[i].calories)
+      //sArray[rArray]+= response[i].time
+      console.log('stash object', sArray.rArray)
+
 
       let wrapper = $("<div>")
       wrapper.addClass("apiRecipe")
