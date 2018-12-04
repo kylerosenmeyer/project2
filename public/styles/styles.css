@@ -6,6 +6,10 @@ html, body {
   margin: 10px auto;
 }
 
+h1 {
+  text-shadow: 2px 2px 5px red;
+}
+
 .headerRow {
   text-align: center;
 }
@@ -13,6 +17,8 @@ html, body {
 .col-md-4, .col-md-12 {
   border: 2px solid gray;
   text-align: center;
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .useIngredient, .ingredient, .removeIngredient {
@@ -24,6 +30,38 @@ html, body {
   font-weight: bold;
 }
 
+
+/* for the results of the recipes after ingridents have been chosen */
+.apiRecipe {
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 25px;
+  height: 200px;
+  width: 100%;
+  z-index: 0;
+  padding: 30px;
+  box-shadow: 2px 2px 5px black;
+
+}
+.recipeLabel {
+  margin-top: 105px;
+  /* z-index: 2; */
+  background-color: rgba(255, 253, 220, 0.349);
+
+}
+
+.openRecipe {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+
+
+
+
+
 .used, .saved {
   background-color: yellow;
 }
@@ -33,9 +71,21 @@ html, body {
 }
 
 .recipeImg {
+  position: relative;
+  margin-top: -185px;
+  height: 200px;
+  width: auto;
+  border-radius: 25px;
+  z-index: -3;
+  /* object-fit: cover; */
+ 
+}
+/* old styling in case of conflict */
+/* .recipeImg {
   height: 50px;
   width: auto;
-}
+} */
+
 
 /*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
 .fade.in {
