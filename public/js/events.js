@@ -169,7 +169,7 @@ $(".getRecipes").click( function() {
               counter = 0
 
           let compareIngredients = function() {
-              if ( counter < userIngredients.length ) {
+              if ( counter < recipeIngredients.length ) {
 
                 console.log("user ingredient: ",userIngredients[counter])
                 console.log("counter: ",counter)
