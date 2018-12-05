@@ -16,7 +16,7 @@ module.exports = function(app) {
         { where: { email: email }, include: [db.Ingredient, db.Recipe] }
         ).then(function(results) {
 
-          // console.log("ingredients: ",results.Ingredients)
+          // console.log("get results: ",results)
           
           //these exist in {{ in app. handlebars}}
           res.render("app", {
