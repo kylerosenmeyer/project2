@@ -6,7 +6,9 @@ module.exports = function(sequelize, DataTypes) {
 
         label: DataTypes.STRING,
         image: DataTypes.STRING,
-        url: DataTypes.STRING
+        url: DataTypes.STRING,
+        ingredients: DataTypes.JSON
+        
     })
     // Associate recipes with the user
     Recipe.associate = function(models) {

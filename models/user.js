@@ -3,11 +3,17 @@ module.exports = function(sequelize, DataTypes) {
     
     //Defines the Model
     let User = sequelize.define("User", {
-        name: {
+           name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: { len: [1, 100] }
-    }})
+
+        }, email: {
+            type: DataTypes.STRING,
+            allowNull: false
+            // validate: { isEmail: true}
+        }})
+
     // Associating users to ingredients and recipes
     User.associate = function(models) {
         // When a user is deleted, also delete any associated ingredients  

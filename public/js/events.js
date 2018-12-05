@@ -29,8 +29,9 @@ $(".login").click( function() {
   console.log(".login clicked")
 
   let userName = $(".enterUser").val().trim(),
-      newUser = { name: userName },
-      nextPage = "/kitchen/" + userName
+      email = $(".enterEmail").val().trim(),
+      newUser = { name: userName, email: email },
+      nextPage = "/kitchen/" + email
 
   console.log("newUser:", newUser)
   $.ajax({
@@ -221,12 +222,15 @@ $(".storeRecipes").click( function() {
     if ( hearts[i].getAttribute("data-saved") === "true" ) {
       
       let id = hearts[i].getAttribute("data-id"),
+          ingredientJSON = JSON.stringify(ingredientStorage[id][i]),
           favorite = {
             label: $("p[data-id=" + id + "]").text(),
             image: $("img[data-id=" + id + "]").attr("src"),
             url: $("a[data-id=" + id + "]").attr("href"),
+            ingredients: ingredientJSON,
             UserID: userID
           }
+
       recipeArray.push(favorite)
     }
   }
