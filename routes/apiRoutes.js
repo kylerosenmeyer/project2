@@ -8,9 +8,9 @@ module.exports = function(app) {
   app.post("/api/users", function(req, res) {
 
     let data = req.body
-    // console.log(data)
+    console.log(data)
 
-    db.User.findOrCreate( { where: { name: data.name } }
+    db.User.findOrCreate( { where: { name: data.name, email: data.email } }
     
       ).then( function(result) {
       res.json(result)
