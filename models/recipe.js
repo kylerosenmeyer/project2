@@ -7,17 +7,17 @@ module.exports = function(sequelize, DataTypes) {
         label: DataTypes.STRING,
         image: DataTypes.STRING,
         url: DataTypes.STRING,
-        ingredients: DataTypes.JSON
-        
+        calories: DataTypes.INTEGER,
+        time: DataTypes.INTEGER,
+        servings: DataTypes.INTEGER
     })
-    // Associate recipes with the user
+
+    // Associate recipes with the User and recipe ingredients with the Recipe
     Recipe.associate = function(models) {
        
-        Recipe.belongsTo(models.User, {
-            foreignKey: {
-                allowNull: false
-            }
-        })
+        Recipe.belongsTo(models.User, { foreignKey: { allowNull: false } } )
+        
+        Recipe.hasMany(models.recipeIngredient, { onDelete: "cascade" } )  
     }
   
     return Recipe

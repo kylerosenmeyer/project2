@@ -86,7 +86,8 @@ $(".getRecipes").click( function() {
 
   console.log(".getRecipes clicked")
   //Empty array where recipes will be stored
-  let selections = []
+  let selections = [],
+      userID = $("#userName").attr("data-userid")
 
   $(".ingredient").each( function() {
 
@@ -100,20 +101,24 @@ $(".getRecipes").click( function() {
       selections.push( $(this).text().toLowerCase() )
     }
   })
-  console.log(selections)
+  console.log("selections:",selections)
 
-  let request = { cook: JSON.stringify(selections), title: "API Request" }
-  console.log(request)
+  let request = { cook: JSON.stringify(selections), title: "API Request", userID: userID }
+  console.log("request:",request)
+  
+  $.ajax({
+    url: "/api/store-search/",
+    method: "POST",
+    data: request
+  }).then( function(response) {
+    console.log("search stored!")
+  })
 
   $.ajax({
-    //where you want to go
     url: "/api/get-recipes/",
-   // type of task
     method: "POST",
-    // has to be an object in JSON format >ajax = JSON
-    //{prop:value]}
     data: request
-  }).then( function(response) { 
+  }).then( function (response) {
 
     console.log("api response: ",response)
 
@@ -207,7 +212,7 @@ $(".getRecipes").click( function() {
     for ( let i=0; i<hearts.length; i++ ) {
       recipes[i].addEventListener("click", openRecipe)
     }
-   })
+   }).catch( function(error) { console.log(error.message) } ) 
 })
 
 //*Event Listener for storing favorited recipes
@@ -222,12 +227,11 @@ $(".storeRecipes").click( function() {
     if ( hearts[i].getAttribute("data-saved") === "true" ) {
       
       let id = hearts[i].getAttribute("data-id"),
-          ingredientJSON = JSON.stringify(ingredientStorage[id][i]),
           favorite = {
             label: $("p[data-id=" + id + "]").text(),
             image: $("img[data-id=" + id + "]").attr("src"),
             url: $("a[data-id=" + id + "]").attr("href"),
-            ingredients: ingredientJSON,
+            ingredients: ingredientStorage[id][i],
             UserID: userID
           }
 
@@ -240,11 +244,12 @@ $(".storeRecipes").click( function() {
   let request = { save: JSON.stringify(recipeArray), title: "API Request" }
   console.log(request)
 
-  $.ajax({
-            url: "/api/store-recipe/",
-            method: "POST",
-            data: request
-          }).then( (function() { location.reload() } ) )
+  $.ajax({ url: "/api/store-recipe/",
+           method: "POST",
+           data: request
+          }).then( (function() { 
+            location.reload() 
+          } ) )
 })
 
 //*Event Listener for removing a Recipe

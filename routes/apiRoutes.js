@@ -22,9 +22,8 @@ module.exports = function(app) {
 
     let data = req.body
 
-    db.Ingredient.create({
-                            label: data.label,
-                            UserId: data.UserID
+    db.Ingredient.create({ label: data.label,
+                           UserId: data.UserID
                           }
                           ).then( function(result) {
                             res.json(result)
@@ -80,7 +79,6 @@ module.exports = function(app) {
     console.log("query:",query)
 
     //Make the API Call
-    //ajax does not exist on the back-end
     axios.get(query)
          .then( function(response) { 
 
@@ -95,42 +93,82 @@ module.exports = function(app) {
               console.log(Recipe[i].recipe.url)
               console.log(Recipe[i].recipe.ingredientLines)
               console.log(Recipe[i].recipe.calories)
+              console.log(Recipe[i].recipe.yield)
               console.log(Recipe[i].recipe.totalTime)
               console.log("\n")
 
-              let recipe = {
-                label: Recipe[i].recipe.label,
-                image: Recipe[i].recipe.image,
-                url: Recipe[i].recipe.url,
-                ingredients: Recipe[i].recipe.ingredientLines,
-                calories: Recipe[i].recipe.calories,
-                time: Recipe[i].recipe.totalTime
-              }
+              let recipe = { label: Recipe[i].recipe.label,
+                             image: Recipe[i].recipe.image,
+                             url: Recipe[i].recipe.url,
+                             ingredients: Recipe[i].recipe.ingredientLines,
+                             calories: Recipe[i].recipe.calories,
+                             servings: Recipe[i].recipe.yield,
+                             time: Recipe[i].recipe.totalTime
+                            }
 
               recipeArray.push(recipe)              
             }
             res.send(recipeArray)
-          })
-         .catch( function (error) { console.log(error) } )
+          }).catch( function (error) { console.log(error) } )
   })
+
+  //*This is the route to store the ingredients searched by the user.
+  app.post("/api/store-search/", function(req, res) {
+
+    let data = JSON.parse(req.body.cook)
+
+    console.log("data: ", data)
+    console.log("userID: ",req.body.userID)
+
+    function storeSearch(data) {
+      for ( let i=0; i<data.length; i++ ) {
+
+        db.Search.create({ label: data[i],
+                           UserId: req.body.userID
+                          })
+      }
+    }
+    storeSearch(data)
+    res.send("search stored!")
+  })
+
   //*This is the route to store a Recipe to the User's list
   app.post("/api/store-recipe/", function(req, res) {
 
     let data = JSON.parse(req.body.save)
     console.log("data: ",data)
 
+    //!This function is not working. Research Sequelize transactions.
     function storeFavorites(data) {
       for ( let i=0; i<data.length; i++ ) {
 
-        db.Recipe.create({
-                          label: data[i].label,
-                          image: data[i].image,
-                          url: data[i].url,
-                          UserId: data[i].UserID
-                          }
-                          )
+        return sequelize.transaction(function (e) {
+
+          return db.Recipe.create({ label: data[i].label,
+                                    image: data[i].image,
+                                    url: data[i].url,
+                                    UserId: data[i].UserID,
+                                    calories: data[i].calories,
+                                    time: data[i].time,
+                                    servings: data[i].servings
+          }, {transaction: e}).then(function (recipe) {
+
+            for ( let j=0; j< data[i].ingredients.length; j++ ) {
+
+              return recipe.db.recipeIngredient( { label: data[i].ingredients[j] }, { transaction: e } )
+              
+            }
+          })
+
+        }).then(function (result) {
+          
+        }).catch(function (err) {
+          console.log(err)
+        })
+        
       }
     }
+
     storeFavorites(data)
     res.end()
   })
@@ -140,11 +178,10 @@ module.exports = function(app) {
 
     let recipe = req.params.recipe
 
-    db.Recipe.destroy({ 
-                            where: { label: recipe } 
-                          } 
-                          ).then( function(result) { 
-                            res.json(result) 
-                          })
+    db.Recipe.destroy({ where: { label: recipe } 
+                      } 
+                      ).then( function(result) { 
+                        res.json(result) 
+                      })
   })
 }
