@@ -1,0 +1,32 @@
+html, body {
+  font-family: 'Acme', sans-serif;
+}
+
+div.content {
+  min-height: 1000px;
+}
+
+
+body {
+  background-color: #FEFFFF;
+}
+
+div.container {
+  width: 100%;
+  background-color: #FEFFFF;
+}
+
+.error {
+  width:400px;
+  min-height:148px;
+  height:148px;
+  position: absolute;
+}
+
+.svg {
+  left:306px;
+  top:182.5px;
+  min-height:315px;
+  width:560px;
+  position: absolute;
+}
