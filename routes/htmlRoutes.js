@@ -10,43 +10,83 @@ module.exports = function(app) {
   //*This Loads the Main App Page, app.handlebars
   app.get("/kitchen/:email", function(req, res) {
 
-    let email = req.params.email
+    let email = req.params.email,
+        sortedIngredients = [],
+        topIngredients = []
     // console.log("email: ",email)
-
+    //Popularity is a function to get the searches out of the database and count/organize them.
     let popularity = function(results) {
 
       db.Search.findAndCountAll({}).then(result => {
         
-        console.log("total ingredients:",result.count)
-        // console.log("search rows:",result.rows)
-
         let groupArray = [],
-            array0 = [],
-            w = window
+            initialArray = [],
+            toggle = false
 
-        array0.push(rows[0].label)
-        groupArray.push(array0)
+        initialArray.push(result.rows[0].label)
+        topIngredients.push({total: result.count})
+        groupArray.push(initialArray)
 
         for ( let i=1; i<result.rows.length; i++ )  {
 
-          if ( w["array"+i-1].includes( result.rows[i].label ) ) {
-            w["array"+i-1].push( result.rows[i].label )
-          } else { 
-              w["array"+i] = []
-              w["array"+i].push( result.rows[i].label )
-              groupArray.push(w["array"+i])
+          for ( let j=0; j<groupArray.length; j++ ) {
+            
+            if ( groupArray[j].includes( result.rows[i].label ) ) {
+
+              groupArray[j].push(result.rows[i].label)
+              toggle = true
+            } 
+          }
+
+          if ( toggle == true ) { 
+            
+            toggle = false
+          } else {
+
+            let newArray = []
+            newArray.push(result.rows[i].label)
+            groupArray.push(newArray)
+            sortedIngredients = groupArray
           }
         }
+        // console.log("\n")
+        // console.log("group array:",groupArray)
+        // console.log("\n")
 
-        console.log("group array:",groupArray)
-      })
+      }).then( function() {
+        // console.log("sorted:",sortedIngredients)
 
-      //these exist in {{ in app. handlebars}}
-      res.render("app", {
-        user: email,
-        userID: results.id,
-        Ingredient: results.Ingredients,
-        Recipe: results.Recipes
+        //Now prepare the the most popular ingredients data to send to the page.
+        let ingredientScores = []
+
+        for ( let k=0; k<sortedIngredients.length; k++ ) {
+
+          ingredientScores.push(sortedIngredients[k].length)
+          // console.log("scores: ",ingredientScores)
+        }
+
+        for ( let m=0; m<4; m++ ) {
+
+          let max = Math.max(...ingredientScores),
+              index = ingredientScores.indexOf(max),
+              percentage = (((max/topIngredients[0].total)*100).toFixed(0) + "%" ),
+              winner = { percent: percentage, count: max, label: sortedIngredients[index][0] }
+        
+          topIngredients.push(winner)
+          ingredientScores.splice(index,1,0)
+        }
+        console.log("\n")
+        console.log("top ingredients:",topIngredients)
+        console.log("\n")
+        topIngredients.splice(0,1)
+        //these exist in {{ in app. handlebars}}
+        res.render("app", {
+          user: email,
+          userID: results.id,
+          Ingredient: results.Ingredients,
+          Recipe: results.Recipes,
+          Popular: topIngredients
+        })
       })
     }
 

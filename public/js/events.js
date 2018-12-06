@@ -150,6 +150,7 @@ $(".getRecipes").click( function() {
          wrapper.addClass("apiRecipe")
                p.addClass("recipeLabel")
                 .attr("data-id", index)
+                .text(label)
              img.addClass("recipeImg")
                 .attr("data-id", index)
                 .attr("src", image)
@@ -161,6 +162,7 @@ $(".getRecipes").click( function() {
                 .attr("data-time", time)
       saveButton.addClass("saveRecipe saveBtn notsaved")
                 .attr("data-saved", "false")
+                .attr("data-heart", index)
 
       wrapper.append(p, img, openButton, saveButton)
       $("#recipeResults").append(wrapper)  
@@ -248,7 +250,7 @@ $(".storeRecipes").click( function() {
 
     if ( hearts[i].getAttribute("data-saved") === "true" ) {
       
-      let id = hearts[i].getAttribute("data-id"),
+      let id = hearts[i].getAttribute("data-heart"),
           favorite = {
             label: $("p[data-id=" + id + "]").text(),
             image: $("img[data-id=" + id + "]").attr("src"),
@@ -283,7 +285,7 @@ $(".removeRecipe").click( function() {
 
   let recipeID = $(this).attr("data-remove"),
       recipeName = $("#"+recipeID).text(),
-      removeURL = "/api/remove-recipe/" + recipeName
+      removeURL = "/api/remove-recipe/" + recipeID
 
   console.log("recipeID: ",recipeID)
   console.log("recipeName: ",recipeName)
@@ -301,12 +303,32 @@ $(".openSavedRecipe").click( function() {
       url = $(this).attr("data-src"),
       title = $("h5[data-id=" + recipeID + "]").text(),
       recipeImage = $("img[data-id=" + recipeID + "]").attr("src")
+  
+  $.ajax({
+    url: "/api/get-saved-ingredients/",
+    method: "POST",
+    data: { id: recipeID }
+  }).then( function(response) {
 
-  $(".modal-title").html(title)
-  $(".modal-image").attr("src", recipeImage)
-  $(".modal-recipe").attr("data-src", url)
-  //Triggle Modal
-  $("#recipeModal").modal("toggle")
+    console.log(response)
+    let ingredientList = ""
+
+    for ( let i=0; i<response.length; i++ ) {
+
+      ingredientList += "<li>" + response[i] + "</li>"
+    }
+    
+    $(".modal-ingredients").html(ingredientList)
+
+    $(".modal-title").html(title)
+    $(".modal-image").attr("src", recipeImage)
+    $(".modal-recipe").attr("data-src", url)
+    //Triggle Modal
+    $("#recipeModal").modal("toggle")
+
+  })
+
+  
 })
       
           

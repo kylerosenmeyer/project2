@@ -1,7 +1,6 @@
 const 
     db = require("../models"),
-    axios = require("axios"),
-    sequelize = require("sequelize")
+    axios = require("axios")
 
 module.exports = function(app) {
   
@@ -25,10 +24,8 @@ module.exports = function(app) {
 
     db.Ingredient.create({ label: data.label,
                            UserId: data.UserID
-                          }
-                          ).then( function(result) {
-                            res.json(result)
-                          })
+                          } )
+                 .then( function(result) { res.json(result) } )
   })
 
   //*This is the route to remove an Ingredient from a User's List
@@ -130,7 +127,6 @@ module.exports = function(app) {
       }
     }
     storeSearch(data)
-    res.send("search stored!")
   })
 
   //*This is the route to store a Recipe to the User's list
@@ -140,7 +136,6 @@ module.exports = function(app) {
     let data = JSON.parse(req.body.save)
     console.log("data: ",data)
 
-    //!This function is not working. Research Sequelize transactions.
     function storeFavorites(data) {
       for ( let i=0; i<data.length; i++ ) {
 
@@ -170,14 +165,34 @@ module.exports = function(app) {
   })
 
   //*This is the route to remove a Recipe from a User's List
-  app.delete("/api/remove-recipe/:recipe", function(req, res) {
+  app.delete("/api/remove-recipe/:recipeID", function(req, res) {
 
-    let recipe = req.params.recipe
+    let recipe = req.params.recipeID
 
-    db.Recipe.destroy({ where: { label: recipe } 
-                      } 
-                      ).then( function(result) { 
-                        res.json(result) 
-                      })
+    db.Recipe.destroy({ where: { id: recipe } } )
+             .then( function(result) { res.json(result) } )
   })
+
+  //*This is the route that grabs a recipe's saved ingredients.
+  app.post("/api/get-saved-ingredients/", function(req, res) {
+
+    let id = req.body.id
+
+    db.recipeIngredient.findAll( { where: { RecipeId: id } } )
+                       .then( function(result) {  
+                        
+                        let response = []
+
+                        console.log("result:",result)
+                        for ( let i=0; i<result.length; i++ ) {
+
+                          response.push(result[i].label)
+                        }
+
+                        res.send(response)
+                       })
+  })
+
+
+
 }

@@ -38,25 +38,16 @@
         <button type="button" class="addIngredient centerButton">Add Ingredient</button>
         <ul style="list-style-type:none">
             <li>
-                <p>Common Ingredients</p>
+                <p>Popular Ingredients</p>
             </li>
-            <li>
-                <button type="button" data-use="false" class="useIngredient eggs">Use</button>
-                <p class="ingredient" data-id="eggs">Eggs</p>
-            </li>
-            <li>
-                <button type="button" data-use="false" class="useIngredient milk">Use</button>
-                <p class="ingredient" data-id="milk">Milk</p>
-            </li>
-            <li>
-                <button type="button" data-use="false" class="useIngredient pasta">Use</button>
-                <p class="ingredient" data-id="pasta">Pasta</p>
-            </li>
-            <li>
-                <button type="button" data-use="false" class="useIngredient cheese">Use</button>
-                <p class="ingredient" data-id="cheese">Cheese</p>
-            </li>
-            <li>
+
+            {{#each Popular}}
+                <li>
+                    <button type="button" data-use="false" class="useIngredient notused {{label}}">Use</button>
+                    <p class="ingredient" data-id={{label}}>{{label}}</p><p class="popPercent">({{percent}})</p>
+                </li>
+            {{/each}}
+            
                 <p>Custom Ingredients</p>
             </li>
             {{#each Ingredient}}
