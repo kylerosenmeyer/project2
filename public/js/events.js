@@ -128,19 +128,41 @@ $(".getRecipes").click( function() {
     for ( let i=1; i<response.length; i++ ) {
 
       let ingredientArray = response[i].ingredients,
-          index = i-1
+          index = i-1,
+          label = response[i].label,
+          image = response[i].image,
+          calories = response[i].calories,
+          servings = response[i].servings,
+          time = response[i].time,
+          url = response[i].url,
+          wrapper = $("<div>"),
+          img = $("<img>"),
+          p = $("<p>"),
+          openButton = $("<button type=\"button\"> Open Recipe </button>"),
+          saveButton = $("<button type=\"button\"><i class=\"fas fa-heart\"></i></button>")
           
-      ingredientStorage.push(ingredientArray)
-    
+      
 
+      ingredientStorage.push(ingredientArray)
       console.log(ingredientStorage)
-  
-      let wrapper = $("<div>")
-      wrapper.addClass("apiRecipe")
-      wrapper.append("<p data-id=\"" + index + "\" class=\"recipeLabel\">" + response[i].label + "</p>")
-      wrapper.append("<img data-id=\"" + index + "\" class=\"recipeImg\" src=\"" + response[i].image + "\">")
-      wrapper.append("<button data-id=\"" + index + "\" class=\"openRecipe\" type=\"button\" data-src=\"" + response[i].url + "\"> Open Recipe </a>")
-      wrapper.append("<button data-id=\"" + index + "\" data-saved=\"false\" type=\"button\" class=\"saveRecipe saveBtn notsaved\"><i class=\"fas fa-heart\"></i></button>")
+      
+      //Build the list of recipe results dynamically
+         wrapper.addClass("apiRecipe")
+               p.addClass("recipeLabel")
+                .attr("data-id", index)
+             img.addClass("recipeImg")
+                .attr("data-id", index)
+                .attr("src", image)
+      openButton.addClass("openRecipe")
+                .attr("data-id", index)
+                .attr("data-src", url)
+                .attr("data-calories", calories)
+                .attr("data-servings", servings)
+                .attr("data-time", time)
+      saveButton.addClass("saveRecipe saveBtn notsaved")
+                .attr("data-saved", "false")
+
+      wrapper.append(p, img, openButton, saveButton)
       $("#recipeResults").append(wrapper)  
     }
 
@@ -230,9 +252,13 @@ $(".storeRecipes").click( function() {
           favorite = {
             label: $("p[data-id=" + id + "]").text(),
             image: $("img[data-id=" + id + "]").attr("src"),
-            url: $("a[data-id=" + id + "]").attr("href"),
-            ingredients: ingredientStorage[id][i],
+            url: $("button[data-id=" + id + "]").attr("data-src"),
+            servings: $("button[data-id=" + id + "]").attr("data-servings"),
+            time: $("button[data-id=" + id + "]").attr("data-time"),
+            calories: $("button[data-id=" + id + "]").attr("data-calories"),
+            ingredients: ingredientStorage[id],
             UserID: userID
+            
           }
 
       recipeArray.push(favorite)
@@ -247,9 +273,7 @@ $(".storeRecipes").click( function() {
   $.ajax({ url: "/api/store-recipe/",
            method: "POST",
            data: request
-          }).then( (function() { 
-            location.reload() 
-          } ) )
+          }).then( (function() { location.reload() } ) )
 })
 
 //*Event Listener for removing a Recipe

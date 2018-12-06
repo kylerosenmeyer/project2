@@ -1,6 +1,7 @@
 const 
     db = require("../models"),
-    axios = require("axios")
+    axios = require("axios"),
+    sequelize = require("sequelize")
 
 module.exports = function(app) {
   
@@ -135,6 +136,7 @@ module.exports = function(app) {
   //*This is the route to store a Recipe to the User's list
   app.post("/api/store-recipe/", function(req, res) {
 
+    
     let data = JSON.parse(req.body.save)
     console.log("data: ",data)
 
@@ -142,33 +144,27 @@ module.exports = function(app) {
     function storeFavorites(data) {
       for ( let i=0; i<data.length; i++ ) {
 
-        return sequelize.transaction(function (e) {
+        db.Recipe.create({ label: data[i].label,
+                            image: data[i].image,
+                            url: data[i].url,
+                            UserId: data[i].UserID,
+                            calories: data[i].calories,
+                            time: data[i].time,
+                            servings: data[i].servings
+        }).then(function (recipe) {
+          console.log("recipe return:",recipe)
 
-          return db.Recipe.create({ label: data[i].label,
-                                    image: data[i].image,
-                                    url: data[i].url,
-                                    UserId: data[i].UserID,
-                                    calories: data[i].calories,
-                                    time: data[i].time,
-                                    servings: data[i].servings
-          }, {transaction: e}).then(function (recipe) {
+          for ( let j=0; j<data[i].ingredients.length; j++ ) {
 
-            for ( let j=0; j< data[i].ingredients.length; j++ ) {
+            db.recipeIngredient.create({ label: data[i].ingredients[j],
+                                          RecipeId: recipe.id
 
-              return recipe.db.recipeIngredient( { label: data[i].ingredients[j] }, { transaction: e } )
-              
-            }
-          })
-
-        }).then(function (result) {
+            }).catch( function (error) { console.log(error) } )
+          }
           
-        }).catch(function (err) {
-          console.log(err)
-        })
-        
+        }).catch( function (error) { console.log(error) } )
       }
     }
-
     storeFavorites(data)
     res.end()
   })
