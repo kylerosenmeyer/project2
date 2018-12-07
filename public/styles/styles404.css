@@ -1,32 +1,28 @@
-html, body {
-  font-family: 'Acme', sans-serif;
+.errorBod { 
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale; 
+  background: url("../images/creased-crinkled-crumpled-479444.jpg") no-repeat center center fixed;  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-div.content {
-  min-height: 1000px;
+
+.f2tErrorR1 {
+  position: relative;
+  z-index: 1;
+} 
+
+.f2tErrorR2 {
+  position: relative;
+  z-index: 2;
+  margin-top: -140px;
 }
 
-
-body {
-  background-color: #FEFFFF;
-}
-
-div.container {
-  width: 100%;
-  background-color: #FEFFFF;
-}
-
-.error {
-  width:400px;
-  min-height:148px;
-  height:148px;
-  position: absolute;
-}
-
-.svg {
-  left:306px;
-  top:182.5px;
-  min-height:315px;
-  width:560px;
-  position: absolute;
+.f2tErrorR3 {
+  position: relative;
+  padding-left: 28%;
+  z-index: 3;
+  margin-top: -75px;
 }
