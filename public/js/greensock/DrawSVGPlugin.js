@@ -11,7 +11,7 @@
  * @author: Jack Doyle, jack@greensock.com
  */
 
-import { _gsScope } from "gsap/TweenLite.js";
+// import { _gsScope } from "gsap/TweenLite.js";
 
 var _doc = _gsScope.document,
 		_getComputedStyle = _doc.defaultView ? _doc.defaultView.getComputedStyle : function() {},
@@ -223,4 +223,4 @@ var _doc = _gsScope.document,
 	DrawSVGPlugin.getLength = getLength;
 	DrawSVGPlugin.getPosition = getPosition;
 
-export { DrawSVGPlugin, DrawSVGPlugin as default };
+// export { DrawSVGPlugin, DrawSVGPlugin as default };

@@ -21,46 +21,74 @@ h1 {
   padding: 15px;
 }
 
-.useIngredient, .ingredient, .removeIngredient {
-  display: inline-block;
-}
-
-.green {
-  color: darkgreen;
-  font-weight: bold;
-}
-
-
-/* for the results of the recipes after ingridents have been chosen */
-.apiRecipe {
-  border-style: solid;
-  border-width: 5px;
-  border-radius: 25px;
-  height: 200px;
-  width: 100%;
-  z-index: 0;
-  padding: 30px;
-  box-shadow: 2px 2px 5px black;
-
-}
-.recipeLabel {
-  margin-top: 105px;
-  /* z-index: 2; */
-  background-color: rgba(255, 253, 220, 0.349);
-
-}
-
-.openRecipe {
-  position: relative;
-  z-index: 2;
+.hat1{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: auto;
+  width: 85%;
 }
 
 
+.hat2{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: auto;
+  width: 85%;
+}
 
+ .hat3{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: auto;
+  width: 85%;
+} 
 
+.hat4{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: auto;
+  width: 85%;
+}
 
+.hat5{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: auto;
+  width: 85%;
+}
 
+.hat6{
+  margin: auto;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  stroke-width: 5px;
+  stroke:black;
+  height: 300px;
+  width: 85%;
+}
 
+.chooseText{
+  display: none;
+}
+
+.choose{
+  display: none;
+}
 
 .used, .saved {
   background-color: yellow;
