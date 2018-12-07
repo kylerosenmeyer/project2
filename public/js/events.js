@@ -194,10 +194,9 @@ $(".getRecipes").click( function() {
               url = $(this).attr("data-src"),
               title = $("p[data-id=" + recipeID + "]").text(),
               recipeImage = $("img[data-id=" + recipeID + "]").attr("src"),
-              recipeIngredients = ingredientStorage[recipeID],
+              recipeIngredients = JSON.parse(JSON.stringify(ingredientStorage[recipeID])),
               ingredientList = "",
               counter = 0
-
           let compareIngredients = function() {
               if ( counter < recipeIngredients.length ) {
 
@@ -275,7 +274,7 @@ $(".storeRecipes").click( function() {
   $.ajax({ url: "/api/store-recipe/",
            method: "POST",
            data: request
-          }).then( (function() { location.reload() } ) )
+          }).then( (function() { } ) )
 })
 
 //*Event Listener for removing a Recipe
