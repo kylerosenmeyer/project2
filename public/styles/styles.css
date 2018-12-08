@@ -17,7 +17,6 @@ h1 {
 .col-md-4, .col-md-12 {
   border: 2px solid gray;
   text-align: center;
-  border-radius: 10px;
   padding: 15px;
 }
 
@@ -90,29 +89,6 @@ h1 {
   display: none;
 }
 
-.used, .saved {
-  background-color: yellow;
-}
-
-.notused, .notsaved {
-  background-color: white;
-}
-
-.recipeImg {
-  position: relative;
-  margin-top: -185px;
-  height: 200px;
-  width: auto;
-  border-radius: 25px;
-  z-index: -3;
-  /* object-fit: cover; */
- 
-}
-/* old styling in case of conflict */
-/* .recipeImg {
-  height: 50px;
-  width: auto;
-} */
 
 
 /*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */

@@ -1,0 +1,158 @@
+
+
+button {
+  border-radius: 10px;
+  z-index: 1;
+}
+
+input {
+  z-index: 1;
+  text-align: center;
+}
+
+input:focus, input:active {
+  outline: none;
+}
+
+.tableHead {
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.leftAlign {
+  padding-left: 0;
+}
+
+.newIngredient {
+  border-radius: 10px;
+}
+.addIngredient {
+  margin-left: 15px;
+}
+
+/* for the results of the recipes after ingridents have been chosen */
+.apiRecipe {
+   width: 85%;
+   border: 5px solid #0a0a0a;
+   border-radius: 20px 20px 0px 0px;
+   display: block;
+   margin: 5px auto;
+   overflow: hidden;
+   position: relative;
+   background-color: #ffffff;
+   color: #59656f;
+  }
+
+  .labelRow, .labelColumn, .buttonColumn {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 35px;
+  }
+
+  .recipeLabel {
+    display: inline-block;
+    padding: 2px 2px 0px;
+    word-wrap: break-word;
+  }
+
+  .recipeImg {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding-bottom: 10px;
+  }
+  
+  .openRecipe {
+    margin: 0px, auto;
+    padding: 5px 5px 10px;
+    background-color: #b98b82;
+    border-radius: 5px 5px 0px 0px;
+  }
+
+  .saveRecipe {
+    margin: 0px 10px 0px 0px;
+    padding: 5px 5px 10px;
+    border-radius: 5px 5px 0px 0px;
+  }
+
+  .ingredient {
+    display: inline-block;
+  }
+
+  .useIngredient {
+    display: inline-block;
+  }
+
+  .removeIngredient {
+    display: inline-block;
+  }
+
+  .popPercent {
+    display: inline-block;
+  }
+
+  .used {
+    background-color: #ee8586;
+    border-color: #a7e7ed;
+    color: #a7e7ed;
+  }
+
+  .notused {
+    background-color: white;
+    border-color: #a7e7ed;
+    color: #a7e7ed;
+  }
+
+  .saved {
+    background-color: white;
+    border-color: #ee8586;
+    color: #ee8586;
+  }
+
+  .saveHeart {
+    text-shadow:
+      0px -1px 0px #ee8586,
+      -1px 0px 0px #ee8586,
+      0px 1px 0px #ee8586,
+      1px 0px 0px #ee8586;
+  }
+
+  .notsaved {
+    background-color: white;
+    border-color: #ee8586;
+    color: white;
+  }
+
+  button:hover, button:active, button:focus {
+    outline: none;
+  }
+
+  .fridgeSVG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    z-index: 0;
+  }
+
+  #recipeResults {
+    background-color: #a7e7ed;
+  }
+
+  .ingredients {
+    background-color: #a7e7ed;
+    color: #59656f;
+  }
+
+  .favoriteRecipes {
+    background-color: #a7e7ed;
+    color: #59656f;
+  }
+
+
+
+
+
+  

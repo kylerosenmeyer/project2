@@ -17,6 +17,9 @@ module.exports = function(app) {
     //Popularity is a function to get the searches out of the database and count/organize them.
     let popularity = function(results) {
 
+      let userName = results.name
+      console.log("username:",userName)
+
       db.Search.findAndCountAll({}).then(result => {
         
         let groupArray = [],
@@ -53,8 +56,7 @@ module.exports = function(app) {
         // console.log("group array:",groupArray)
         // console.log("\n")
 
-      }).then( function() {
-        // console.log("sorted:",sortedIngredients)
+      }).then( function() {        
 
         //Now prepare the the most popular ingredients data to send to the page.
         let ingredientScores = []
@@ -81,7 +83,7 @@ module.exports = function(app) {
         topIngredients.splice(0,1)
         //these exist in {{ in app. handlebars}}
         res.render("app", {
-          user: email,
+          user: userName,
           userID: results.id,
           Ingredient: results.Ingredients,
           Recipe: results.Recipes,

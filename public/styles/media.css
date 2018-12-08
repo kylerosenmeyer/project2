@@ -1,0 +1,15 @@
+@media only screen and (max-width: 500px ) {
+    .recipeLabel {
+        font-size: 0.75em;
+        padding-left: 15px;
+        padding-bottom: 10px;
+    }
+
+    .labelRow {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        height: auto;
+      }
+}
