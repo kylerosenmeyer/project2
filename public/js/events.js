@@ -136,10 +136,14 @@ $(".getRecipes").click( function() {
           time = response[i].time,
           url = response[i].url,
           wrapper = $("<div>"),
+          row = $("<div>"),
+          bigColumn = $("<div>"),
+          smallColumn1 = $("<div>"),
+          smallColumn2 = $("<div>"),
           img = $("<img>"),
           p = $("<p>"),
-          openButton = $("<button type=\"button\"> Open Recipe </button>"),
-          saveButton = $("<button type=\"button\"><i class=\"fas fa-heart\"></i></button>")
+          openButton = $("<button type=\"button\"><i class=\"fas fa-box-open\"></i> </button>"),
+          saveButton = $("<button type=\"button\"><i class=\"fas fa-heart saveHeart\"></i></button>")
           
       
 
@@ -148,6 +152,10 @@ $(".getRecipes").click( function() {
       
       //Build the list of recipe results dynamically
          wrapper.addClass("apiRecipe")
+             row.addClass("row labelRow")
+       bigColumn.addClass("col-9 labelColumn")
+    smallColumn1.addClass("col-1 buttonColumn")
+    smallColumn2.addClass("col-2 buttonColumn")
                p.addClass("recipeLabel")
                 .attr("data-id", index)
                 .text(label)
@@ -160,11 +168,16 @@ $(".getRecipes").click( function() {
                 .attr("data-calories", calories)
                 .attr("data-servings", servings)
                 .attr("data-time", time)
-      saveButton.addClass("saveRecipe saveBtn notsaved")
+      saveButton.addClass("saveBtn saveRecipe notsaved")
                 .attr("data-saved", "false")
                 .attr("data-heart", index)
 
-      wrapper.append(p, img, openButton, saveButton)
+
+      bigColumn.append(p)
+      smallColumn1.append(openButton)
+      smallColumn2.append(saveButton)
+      row.append(bigColumn, smallColumn1, smallColumn2)
+      wrapper.append(img, row)
       $("#recipeResults").append(wrapper)  
     }
 
