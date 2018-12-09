@@ -4,7 +4,9 @@ console.log("events.js loaded")
 let ingredientStorage = [],
     userIngredients = []
 
-//*Event Listener for Toggling an Ingredient between "used" and "notused"
+
+
+//*--------------Event Listener for Toggling an Ingredient between "used" and "notused"--------------------------
 $(".useIngredient").click( function() {
 
   let toggle = $(this).attr("data-use")
@@ -23,8 +25,12 @@ $(".useIngredient").click( function() {
   }
 })
 
-//*Event Listener for creating new users
-$(".login").click( function() {
+
+
+
+
+//*----------------------Event Listener for creating new users---------------------------------------
+$(".loginBtn").click( function() {
 
   console.log(".login clicked")
 
@@ -42,7 +48,12 @@ $(".login").click( function() {
   }).then( function() { location.href = nextPage } )
 })
 
-//*Event Listener for adding an Ingredient
+
+
+
+
+
+//*---------------------------Event Listener for adding an Ingredient------------------------------------
 $(".addIngredient").click( function() {
 
   console.log(".addIngredient clicked")
@@ -59,7 +70,13 @@ $(".addIngredient").click( function() {
   }).then( function() { location.reload() } )
 })
 
-//*Event Listener for removing an Ingredient
+
+
+
+
+
+
+//*---------------------------Event Listener for removing an Ingredient------------------------------------
 $(".removeIngredient").click( function() {
 
   console.log(".removeIngredient clicked")
@@ -77,12 +94,19 @@ $(".removeIngredient").click( function() {
   }).then( function() { location.reload() } )
 })
 
-//*Event Listener for getting the recipes from the api.
+
+
+
+
+
+
+//*---------Event Listener for getting the recipes from the api.---------------------------
 $(".getRecipes").click( function() {
 
   $(".apiRecipe").remove()
   userIngredients = []
   ingredientStorage = []
+
 
   console.log(".getRecipes clicked")
   //Empty array where recipes will be stored
@@ -98,160 +122,188 @@ $(".getRecipes").click( function() {
 
     if ( matchedAttr === "true" ) {
 
-      selections.push( $(this).text().toLowerCase() )
+      selections.push( $(this).text().trim().toLowerCase() )
     }
   })
   console.log("selections:",selections)
 
-  let request = { cook: JSON.stringify(selections), title: "API Request", userID: userID }
-  console.log("request:",request)
-  
-  $.ajax({
-    url: "/api/store-search/",
-    method: "POST",
-    data: request
-  }).then( function(response) {
-    console.log("search stored!")
-  })
+  //Check to see if the user made any selections before doing any more work.
+  if ( selections.length === 0 ) {
+    $("#recipeResults").html("No ingredients were selected. Please select some ingredients to get recipes!")
+  } else {
 
-  $.ajax({
-    url: "/api/get-recipes/",
-    method: "POST",
-    data: request
-  }).then( function (response) {
+    $("#recipeResults").html("")
 
-    console.log("api response: ",response)
+    let request = { cook: JSON.stringify(selections), title: "API Request", userID: userID }
+    console.log("request:",request)
 
-    userIngredients = response[0]
-    console.log("user ingredients: ",userIngredients)
 
-    for ( let i=1; i<response.length; i++ ) {
+    //Send Two AJAX requests, one to store the ingredients that were searched for and one for getting the recipes.
+    $.ajax({
+      url: "/api/store-search/",
+      method: "POST",
+      data: request
+    }).then( function(response) {
+      console.log("search stored!")
+    })
 
-      let ingredientArray = response[i].ingredients,
-          index = i-1,
-          label = response[i].label,
-          image = response[i].image,
-          calories = response[i].calories,
-          servings = response[i].servings,
-          time = response[i].time,
-          url = response[i].url,
-          wrapper = $("<div>"),
-          row = $("<div>"),
-          bigColumn = $("<div>"),
-          smallColumn1 = $("<div>"),
-          smallColumn2 = $("<div>"),
-          img = $("<img>"),
-          p = $("<p>"),
-          openButton = $("<button type=\"button\"><i class=\"fas fa-box-open\"></i> </button>"),
-          saveButton = $("<button type=\"button\"><i class=\"fas fa-heart saveHeart\"></i></button>")
-          
+    $.ajax({
+      url: "/api/get-recipes/",
+      method: "POST",
+      data: request
+    }).then( function (response) {
+
+      console.log("api response: ",response)
+
+      userIngredients = response[0]
+      console.log("user ingredients: ",userIngredients)
+
+      for ( let i=1; i<response.length; i++ ) {
+
+        let ingredientArray = response[i].ingredients,
+            index = i-1,
+            label = response[i].label,
+            image = response[i].image,
+            calories = response[i].calories,
+            servings = response[i].servings,
+            time = response[i].time,
+            url = response[i].url,
+            wrapper = $("<div>"),
+            row = $("<div>"),
+            bigColumn = $("<div>"),
+            smallColumn1 = $("<div>"),
+            smallColumn2 = $("<div>"),
+            img = $("<img>"),
+            p = $("<p>"),
+            openButton = $("<button type=\"button\"><i class=\"fas fa-box-open\"></i> </button>"),
+            saveButton = $("<button type=\"button\"><i class=\"fas fa-heart saveHeart\"></i></button>")
+            
+        
+
+        ingredientStorage.push(ingredientArray)
+        console.log(ingredientStorage)
+        
+        //Build the list of recipe results dynamically
+          wrapper.addClass("apiRecipe")
+              row.addClass("row labelRow")
+        bigColumn.addClass("col-7 labelColumn")
+      smallColumn1.addClass("col-2 buttonColumn")
+      smallColumn2.addClass("col-2 buttonColumn")
+                p.addClass("recipeLabel")
+                  .attr("data-id", index)
+                  .text(label)
+              img.addClass("recipeImg")
+                  .attr("data-id", index)
+                  .attr("src", image)
+        openButton.addClass("openRecipe")
+                  .attr("data-id", index)
+                  .attr("data-src", url)
+                  .attr("data-calories", calories)
+                  .attr("data-servings", servings)
+                  .attr("data-time", time)
+        saveButton.addClass("saveBtn saveRecipe notsaved")
+                  .attr("data-saved", "false")
+                  .attr("data-heart", index)
+
+
+        bigColumn.append(p)
+        smallColumn1.append(openButton)
+        smallColumn2.append(saveButton)
+        row.append(bigColumn, smallColumn1, smallColumn2)
+        wrapper.append(img, row)
+        $("#recipeResults").append(wrapper)  
+      }
+
+
+      //*------------------------------Add Event Listeners for saving a recipe (inside the get Recipes Callback)------------------------------------
+      let hearts = document.getElementsByClassName("saveRecipe"),
+          saveRecipe = function() {
+
+            if ( $(this).attr("data-saved") === "false" ) {
+
+              $(this).attr("data-saved", "true").removeClass("notsaved").addClass("saved")
+                  
+            } else if ( $(this).attr("data-saved") === "true" ) {
+
+              $(this).attr("data-saved", "false").removeClass("saved").addClass("notsaved")
+            } 
+          }
+      for ( let i=0; i<hearts.length; i++ ) {
+        hearts[i].addEventListener("click", saveRecipe)
+      }
+
+      //*----------------------------Add Event Listeners for opening a recipe (inside the get Recipes Callback)------------------------------------
+      let recipes = document.getElementsByClassName("openRecipe"),
+          openRecipe = function() {
+
+            let recipeID = $(this).attr("data-id"),
+                url = $(this).attr("data-src"),
+                calories = parseInt($(this).attr("data-calories")),
+                servings = parseInt($(this).attr("data-servings")),
+                time = parseInt($(this).attr("data-time")),
+                title = $("p[data-id=" + recipeID + "]").text(),
+                recipeImage = $("img[data-id=" + recipeID + "]").attr("src"),
+                recipeIngredients = JSON.parse(JSON.stringify(ingredientStorage[recipeID])),
+                ingredientList = "",
+                counter = 0
+
+            //Calculate the calories per serving and time for the recipe
+            console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
+
+            calories = (calories/servings).toFixed(0)
+            console.log("calories/serving:",calories)
+
+            if ( time === 0 ) { time = "Cooking Time Not Available. Check Recipe Website." } else { time = "Ready in " + time + " minutes."}
+
+            let compareIngredients = function() {
+                if ( counter < recipeIngredients.length ) {
+
+                  console.log("user ingredient: ",userIngredients[counter])
+                  console.log("counter: ",counter)
       
+                  for ( let i=0; i<recipeIngredients.length; i++ ) {
 
-      ingredientStorage.push(ingredientArray)
-      console.log(ingredientStorage)
-      
-      //Build the list of recipe results dynamically
-         wrapper.addClass("apiRecipe")
-             row.addClass("row labelRow")
-       bigColumn.addClass("col-9 labelColumn")
-    smallColumn1.addClass("col-1 buttonColumn")
-    smallColumn2.addClass("col-2 buttonColumn")
-               p.addClass("recipeLabel")
-                .attr("data-id", index)
-                .text(label)
-             img.addClass("recipeImg")
-                .attr("data-id", index)
-                .attr("src", image)
-      openButton.addClass("openRecipe")
-                .attr("data-id", index)
-                .attr("data-src", url)
-                .attr("data-calories", calories)
-                .attr("data-servings", servings)
-                .attr("data-time", time)
-      saveButton.addClass("saveBtn saveRecipe notsaved")
-                .attr("data-saved", "false")
-                .attr("data-heart", index)
-
-
-      bigColumn.append(p)
-      smallColumn1.append(openButton)
-      smallColumn2.append(saveButton)
-      row.append(bigColumn, smallColumn1, smallColumn2)
-      wrapper.append(img, row)
-      $("#recipeResults").append(wrapper)  
-    }
-
-
-    //*Event Listener for saving a recipe
-    let hearts = document.getElementsByClassName("saveRecipe"),
-        saveRecipe = function() {
-
-          if ( $(this).attr("data-saved") === "false" ) {
-
-            $(this).attr("data-saved", "true").removeClass("notsaved").addClass("saved")
-                
-          } else if ( $(this).attr("data-saved") === "true" ) {
-
-            $(this).attr("data-saved", "false").removeClass("saved").addClass("notsaved")
-          } 
-        }
-    for ( let i=0; i<hearts.length; i++ ) {
-      hearts[i].addEventListener("click", saveRecipe)
-    }
-
-    //*Event Listener for opening a recipe
-    let recipes = document.getElementsByClassName("openRecipe"),
-        openRecipe = function() {
-
-          let recipeID = $(this).attr("data-id"),
-              url = $(this).attr("data-src"),
-              title = $("p[data-id=" + recipeID + "]").text(),
-              recipeImage = $("img[data-id=" + recipeID + "]").attr("src"),
-              recipeIngredients = JSON.parse(JSON.stringify(ingredientStorage[recipeID])),
-              ingredientList = "",
-              counter = 0
-          let compareIngredients = function() {
-              if ( counter < recipeIngredients.length ) {
-
-                console.log("user ingredient: ",userIngredients[counter])
-                console.log("counter: ",counter)
+                    if ( recipeIngredients[i].includes( userIngredients[counter] ) ) {
     
-                for ( let i=0; i<recipeIngredients.length; i++ ) {
-
-                  if ( recipeIngredients[i].includes( userIngredients[counter] ) ) {
-  
-                    ingredientList += "<li class=\"green\">" + recipeIngredients[i] + "</li>"
-                    recipeIngredients.splice(i,1)
+                      ingredientList += "<li class=\"found\">" + recipeIngredients[i] + "</li>"
+                      recipeIngredients.splice(i,1)
+                    } 
                   } 
-                } 
-    
-                counter++
-                compareIngredients()
-              }
+      
+                  counter++
+                  compareIngredients()
+                }
+            }
+
+            compareIngredients()
+
+            for ( let i=0; i<recipeIngredients.length; i++ ) {
+
+              ingredientList += "<li>" + recipeIngredients[i] + "</li>"
+            }
+            
+            $(".modal-ingredients").html(ingredientList)
+            $(".modal-title").html(title)
+            $(".modal-image").attr("src", recipeImage)
+            $(".modal-recipe").attr("data-src", url)
+            $(".modal-calories").html(calories + " calories per serving, makes " + servings + " servings.")
+            $(".modal-time").html(time)
+            //Triggle Modal
+            $("#recipeModal").modal("toggle")
+            
           }
-
-          compareIngredients()
-
-          for ( let i=0; i<recipeIngredients.length; i++ ) {
-
-            ingredientList += "<li>" + recipeIngredients[i] + "</li>"
-          }
-          
-          $(".modal-ingredients").html(ingredientList)
-          $(".modal-title").html(title)
-          $(".modal-image").attr("src", recipeImage)
-          $(".modal-recipe").attr("data-src", url)
-          //Triggle Modal
-          $("#recipeModal").modal("toggle")
-          
-        }
-    for ( let i=0; i<hearts.length; i++ ) {
-      recipes[i].addEventListener("click", openRecipe)
-    }
-   }).catch( function(error) { console.log(error.message) } ) 
+      for ( let i=0; i<hearts.length; i++ ) {
+        recipes[i].addEventListener("click", openRecipe)
+      }
+    }).catch( function(error) { console.log(error.message) } ) 
+  }
 })
 
-//*Event Listener for storing favorited recipes
+
+
+
+
+//*--------------------------------Event Listener for storing favorited recipes------------------------------
 $(".storeRecipes").click( function() {
 
   let hearts = document.getElementsByClassName("saveRecipe"),
@@ -281,16 +333,34 @@ $(".storeRecipes").click( function() {
 
   console.log("recipeArray: ",recipeArray)
 
-  let request = { save: JSON.stringify(recipeArray), title: "API Request" }
-  console.log(request)
+  //Check to see if the user made any selections before doing any more work.
+  if ( recipeArray.length === 0 ) {
+    $(".storeError").html("No recipes were selected. Please <i class=\"fas fa-heart\"></i> some recipes to store them!")
+  } else { 
 
-  $.ajax({ url: "/api/store-recipe/",
-           method: "POST",
-           data: request
-          }).then( (function() { } ) )
+    $(".storeError").html("")
+
+    let request = { save: JSON.stringify(recipeArray), title: "API Request" }
+    console.log(request)
+
+    $.ajax({ url: "/api/store-recipe/",
+            method: "POST",
+            data: request
+            }).then( (function() { location.reload() } ) )
+  }
 })
 
-//*Event Listener for removing a Recipe
+
+
+
+
+
+
+
+
+
+
+//*-----------------------------------Event Listener for removing a Recipe----------------------------------
 $(".removeRecipe").click( function() {
 
   console.log(".removeRecipe clicked")
@@ -308,13 +378,30 @@ $(".removeRecipe").click( function() {
   }).then( function() { location.reload() } )
 })
 
-//*Event Listener for opening a saved Recipe
+
+
+
+
+
+
+//*-------------------------------Event Listener for opening a saved Recipe-------------------------------
 $(".openSavedRecipe").click( function() {
 
   let recipeID = $(this).attr("data-id"),
       url = $(this).attr("data-src"),
+      calories = parseInt($(this).attr("data-calories")),
+      servings = parseInt($(this).attr("data-servings")),
+      time = parseInt($(this).attr("data-time")),
       title = $("h5[data-id=" + recipeID + "]").text(),
       recipeImage = $("img[data-id=" + recipeID + "]").attr("src")
+
+  //Calculate the calories per serving and time for the recipe
+  console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
+
+  calories = (calories/servings).toFixed(0)
+  console.log("calories/serving:",calories)
+
+  if ( time === 0 ) { time = "Cooking Time Not Available. Check Recipe Website." } else { time = "Ready in " + time + " minutes."}
   
   $.ajax({
     url: "/api/get-saved-ingredients/",
@@ -335,6 +422,8 @@ $(".openSavedRecipe").click( function() {
     $(".modal-title").html(title)
     $(".modal-image").attr("src", recipeImage)
     $(".modal-recipe").attr("data-src", url)
+    $(".modal-calories").html(calories + " calories per serving, makes " + servings + " servings.")
+    $(".modal-time").html(time)
     //Triggle Modal
     $("#recipeModal").modal("toggle")
 
@@ -345,6 +434,9 @@ $(".openSavedRecipe").click( function() {
       
           
 
+
+
+//*-----------------------------------Event Listener for clicking the Open Recipe Button in a Modal--------------------------------------
 $(".modal-recipe").click( function() {
 
   let url = $(this).attr("data-src")
@@ -354,6 +446,11 @@ $(".modal-recipe").click( function() {
 $(".modal-close").click( function() {
   $(".modal-recipe").attr("data-src", " ")
 })
+
+
+
+
+
 
 
 //This code snippet focuses onto the modal when it displays (taken from bootstrap documentation)

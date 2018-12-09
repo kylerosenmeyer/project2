@@ -1,94 +1,90 @@
 html, body {
   font-family: 'Acme', sans-serif;
+  color: #0a0a0a;
+}
+
+input {
+  color: #0a0a0a;
+  border: 3px inset #ffffff;
+  text-align: center;
+  border-radius: 10px;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  background-image: url("/images/PNG/frenchstucco.png");
+  border-top: 7px double #ee8586;
+  height: 55px;
+}
+
+footer p {
+  padding: 0px;
+  margin: 0px;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+button:hover, button:active, button:focus, details:focus, details:active, summary:focus, summary:active {
+  outline: none;
+}
+
+/**Cover SVG Section*/
+.svgWrapper {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  background-image: url("/images/PNG/frenchstucco.png");
+}
+
+#logoPath {
+  stroke: black;
+  stroke-width: 1px;
+  stroke-opacity: 0;
+  fill-opacity: 0;
 }
 
 .centerButton {
   margin: 10px auto;
 }
 
-h1 {
-  text-shadow: 2px 2px 5px red;
-}
-
-.headerRow {
-  text-align: center;
-}
-
-.col-md-4, .col-md-12 {
-  border: 2px solid gray;
-  text-align: center;
-  padding: 15px;
-}
-
-.hat1{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: auto;
-  width: 85%;
-}
-
-
-.hat2{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: auto;
-  width: 85%;
-}
-
- .hat3{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: auto;
-  width: 85%;
-} 
-
-.hat4{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: auto;
-  width: 85%;
-}
-
-.hat5{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: auto;
-  width: 85%;
-}
-
-.hat6{
-  margin: auto;
-  fill-opacity: 0;
-  stroke-opacity: 0;
-  stroke-width: 5px;
-  stroke:black;
-  height: 300px;
-  width: 85%;
-}
-
-.chooseText{
+.loginWrapper {
   display: none;
+  width: 100%;
+  height: 100%;
 }
 
-.choose{
+.choose {
   display: none;
+  margin: 15px auto;
+  text-align: center;
+  background-color: #ffffff;
+  width: 33%;
 }
 
+.loginBtn {
+  display: none;
+  text-align: center;
+  color: #0e3b43;
+  background-color: #ffffff;
+  border: 3px inset #ffffff;
+  width: 25%;
+  padding: 10px 0px;
+  transition: width 1s, padding 1s, background-color 1s;
+}
+
+.loginBtn:hover {
+  width: 33%;
+  border: 3px inset #a7e7ed;
+  background-color: #a7e7ed;
+}
 
 
 /*Modal Styling Fix. We did not write this code. Source: https://github.com/shlomiassaf/ngx-modialog/issues/280 */
