@@ -1,7 +1,7 @@
 {
-  "name": "node-handlebars-boilerplate",
+  "name": "fridge-2-table",
   "version": "1.0.0",
-  "description": "Project 2 Starter",
+  "description": "A Recipe App To Help You Cook With What You Have",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
