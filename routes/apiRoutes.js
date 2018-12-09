@@ -72,7 +72,7 @@ module.exports = function(app) {
 
     let appID = "8417f32f",
         appKey = "cdc0b36554522a88a0242b7ea30e9837",
-        query = "https://api.edamam.com/search?" + q + "&app_id=" + appID + "&app_key=" + appKey + "&from=0&to=5"
+        query = "https://api.edamam.com/search?" + q + "&app_id=" + appID + "&app_key=" + appKey + "&from=0&to=8"
 
     console.log("query:",query)
 
