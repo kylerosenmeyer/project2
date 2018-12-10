@@ -15,7 +15,6 @@ input:focus, input:active {
   background-color: #a7e7ed;
   color: #0a0a0a;
   height: 100%;
-  padding-bottom: 50px;
 }
 
 
@@ -34,6 +33,7 @@ input:focus, input:active {
 
 .favsRow {
   background-color: #ffffff;
+  padding-bottom: 50px;
 }
 
 #userName {
@@ -59,10 +59,15 @@ input:focus, input:active {
   margin-bottom: 5px;
 }
 
+.description {
+  font-size: 1.2em;
+}
+
 .newIngredient {
   margin: 5px auto 20px;
   padding: 2px 2px;
 }
+
 .addIngredient {
   background-color: #ffffff;
   margin: 5px 10px 20px 15px;
@@ -84,17 +89,29 @@ input:focus, input:active {
   display: inline-block;
 }
 
+p.ingredient {
+  font-size: 1.2em;
+}
+
 .ingredientHeader {
   margin-left: 10px;
+  font-size: 1.1em
 }
 
 .ingredientHeader2 {
-  margin-left: 8px;
+  margin-left: 11px;
+  font-size: 1.1em;
+}
+
+.pieHeader {
+  margin-left: 5px;
+  font-size: 1.1em;
 }
 
 .useIngredient {
   display: inline-block;
   transition: color 0.5s;
+  padding: 5px 10px;
 }
 
 .useIngredient:hover {
@@ -105,6 +122,8 @@ input:focus, input:active {
   display: inline-block;
   color: #a7e7ed;
   transition: color 0.5s;
+  padding: 5px 10px;
+  background-color: #ffffff;
 }
 
 .removeIngredient:hover {
@@ -113,6 +132,7 @@ input:focus, input:active {
 
 .popPercent {
   display: inline-block;
+  padding: 5px;
 }
 
 .used {
@@ -173,25 +193,27 @@ input:focus, input:active {
   }
 
   .labelColumn {
-    display: inline-block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 0px;
-    margin-right: 5px;
-    margin-left: 10px;
-    padding: 5px 5px 0px 8px;
-    height: 35px;
+    margin: 0px;
+    padding: 0px;
+    width: 70%;
+    float:left;
   }
 
   .buttonColumn {
-    float: right;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    width: 20%;
   }
 
   .recipeLabel {
     display: inline-block;
-    font-size: 0.8em;
-    margin-left: 5px;
+    font-size: 1em;
+    margin: 0px;
+    padding: 5px 0px 0px;
   }
 
   .recipeImg {
@@ -199,24 +221,18 @@ input:focus, input:active {
     height: auto;
     display: block;
     padding-bottom: 10px;
-  }
-  
-  .openRecipe {
-    margin: 0px, auto;
-    padding: 5px 5px 10px;
-    background-color: #b98b82;
-    border-radius: 5px 5px 0px 5px;
-    transition: color 0.75s;
+    filter: none;
+    transition: filter 1s;
   }
 
-  .openRecipe:hover {
-    color: #ffffff;
+  .recipeImg:hover {
+    filter: brightness(120%) contrast(80%) saturate(110%) opacity(80%);
   }
 
   .saveRecipe {
-    margin: 0px 10px 0px 0px;
-    padding: 5px 5px 10px;
-    border-radius: 5px 5px 0px 5px;
+    margin: 0px;
+    padding: 5px 10px;
+    border-radius: 5px 5px 0px 15px;
   }
 
   .saved {
@@ -253,7 +269,7 @@ input:focus, input:active {
 
 .favsRow {
   margin-top: 25px;
-  padding-right: 15px;
+  padding-right: 20px;
   padding-bottom: 15px;
   margin-bottom: 0px;
   width: 105%;
@@ -429,6 +445,13 @@ input:focus, input:active {
   color: #a7e7ed;
 }
 
+/* .row {
+  border: 1px solid black;
+} */
+
+/* .col-md-4, .col-md-8, .col-12, .col-8, .col-2, .col-sm-4, .col-sm-8 {
+  border: 1px solid black;
+} */
   
 
 

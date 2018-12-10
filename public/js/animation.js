@@ -90,3 +90,15 @@ $(".recipeDropDown").click( function() {
         $(".emptyFlexColumn").removeClass("col-4").addClass("col-2")
     }
 })
+
+
+
+
+
+
+//*-----------------------------------------------Resizing Section Step 1 and Step 2 Override for Bootstrap---------------------------------------------------
+
+// console.log(width)
+// if ( width <= 1000 ) {
+//     $(".step1, .step2").css({"display":"block", "width": width})
+// }
