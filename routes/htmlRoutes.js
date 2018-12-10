@@ -39,10 +39,11 @@ module.exports = function(app) {
         db.Search.findAndCountAll({}).then(result => {
           
           let groupArray = [],
-              initialArray = [],
-              toggle = false
+              initialArray = []
+
+          console.log("result:",result)
           
-          if ( result.length > 0 ) {
+          if ( result.count > 0 ) {
 
           
 
@@ -50,28 +51,28 @@ module.exports = function(app) {
             topIngredients.push({total: result.count})
             groupArray.push(initialArray)
 
-            for ( let i=1; i<result.rows.length; i++ )  {
+            console.log("groupArray:",groupArray)
+
+            for ( let i=0; i<result.rows.length; i++ )  {
 
               for ( let j=0; j<groupArray.length; j++ ) {
                 
                 if ( groupArray[j].includes( result.rows[i].label ) ) {
-
+                  console.log(result.rows[i].label)
                   groupArray[j].push(result.rows[i].label)
-                  toggle = true
-                } 
-              }
+                 
+                } else {
 
-              if ( toggle == true ) { 
-                
-                toggle = false
-              } else {
-
-                let newArray = []
-                newArray.push(result.rows[i].label)
-                groupArray.push(newArray)
-                sortedIngredients = groupArray
-              }
+                  let newArray = []
+                  newArray.push(result.rows[i].label)
+                  groupArray.push(newArray)
+                  console.log("new array made")
+                }
+              } 
             }
+            
+            sortedIngredients = groupArray
+            console.log("sorted ingredients:",sortedIngredients)
 
             //Now prepare the the most popular ingredients data to send to the page.
             let ingredientScores = []
@@ -79,7 +80,7 @@ module.exports = function(app) {
             for ( let k=0; k<sortedIngredients.length; k++ ) {
 
               ingredientScores.push(sortedIngredients[k].length)
-              // console.log("scores: ",ingredientScores)
+              console.log("scores: ",ingredientScores)
             }
 
             for ( let m=0; m<4; m++ ) {
