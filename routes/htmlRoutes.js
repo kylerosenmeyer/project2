@@ -39,7 +39,8 @@ module.exports = function(app) {
         db.Search.findAndCountAll({}).then(result => {
           
           let groupArray = [],
-              initialArray = []
+              initialArray = [],
+              toggle = false
 
           console.log("result:",result)
           
@@ -53,24 +54,29 @@ module.exports = function(app) {
 
             console.log("groupArray:",groupArray)
 
-            for ( let i=0; i<result.rows.length; i++ )  {
+            for ( let i=1; i<result.rows.length; i++ )  {
 
               for ( let j=0; j<groupArray.length; j++ ) {
                 
                 if ( groupArray[j].includes( result.rows[i].label ) ) {
-                  console.log(result.rows[i].label)
-                  groupArray[j].push(result.rows[i].label)
-                 
-                } else {
 
-                  let newArray = []
+                  console.log("found:",result.rows[i].label)
+                  groupArray[j].push(result.rows[i].label)
+                  toggle = true
+                 
+                } 
+              } 
+
+              if ( toggle == true ) {
+                toggle = false
+              } else {
+                let newArray = []
                   newArray.push(result.rows[i].label)
                   groupArray.push(newArray)
-                  console.log("new array made")
-                }
-              } 
+                  console.log("new:",result.rows[i].label)
+              }
             }
-            
+
             sortedIngredients = groupArray
             console.log("sorted ingredients:",sortedIngredients)
 
