@@ -1,5 +1,5 @@
 //Event Listeners Go Here
-console.log("events.js loaded")
+// console.log("events.js loaded")
 //set a two arrays at the gloabl scope to be used later in dynamic events with the recipe results.
 let ingredientStorage = [],
     userIngredients = []
@@ -32,14 +32,14 @@ $(".useIngredient").click( function() {
 //*----------------------Event Listener for creating new users---------------------------------------
 $(".loginBtn").click( function() {
 
-  console.log(".login clicked")
+  // console.log(".login clicked")
 
   let userName = $(".enterUser").val().trim(),
       email = $(".enterEmail").val().trim(),
       newUser = { name: userName, email: email },
       nextPage = "/kitchen/" + email
 
-  console.log("newUser:", newUser)
+  // console.log("newUser:", newUser)
   $.ajax({
     url: "/api/users",
     method: "POST",
@@ -56,13 +56,13 @@ $(".loginBtn").click( function() {
 //*---------------------------Event Listener for adding an Ingredient------------------------------------
 $(".addIngredient").click( function() {
 
-  console.log(".addIngredient clicked")
+  // console.log(".addIngredient clicked")
 
   let ingredientName = $(".newIngredient").val().trim(),
       userID = $("#userName").attr("data-userid"),
       newIngredient = { label: ingredientName, UserID: userID }
 
-  console.log("newIngredient:", newIngredient)
+  // console.log("newIngredient:", newIngredient)
   $.ajax({
     url: "/api/add-ingredient/",
     method: "POST",
@@ -79,15 +79,15 @@ $(".addIngredient").click( function() {
 //*---------------------------Event Listener for removing an Ingredient------------------------------------
 $(".removeIngredient").click( function() {
 
-  console.log(".removeIngredient clicked")
+  // console.log(".removeIngredient clicked")
 
   let ingredientID = $(this).attr("data-remove"),
       ingredientName = $("#"+ingredientID).text(),
       removeURL = "/api/remove-ingredient/" + ingredientName
 
-  console.log("ingredientID: ",ingredientID)
-  console.log("ingredientName: ",ingredientName)
-  console.log("removeUrl: ",removeURL)
+  // console.log("ingredientID: ",ingredientID)
+  // console.log("ingredientName: ",ingredientName)
+  // console.log("removeUrl: ",removeURL)
   $.ajax({
     url: removeURL,
     method: "DELETE"
@@ -108,7 +108,7 @@ $(".getRecipes").click( function() {
   ingredientStorage = []
 
 
-  console.log(".getRecipes clicked")
+  // console.log(".getRecipes clicked")
   //Empty array where recipes will be stored
   let selections = [],
       userID = $("#userName").attr("data-userid")
@@ -118,14 +118,14 @@ $(".getRecipes").click( function() {
     let buttonClass = "." + $(this).attr("data-id"),
         matchedAttr = $(buttonClass).attr("data-use")
     
-    console.log("ingredient: " + buttonClass + ", matched " + matchedAttr)
+    // console.log("ingredient: " + buttonClass + ", matched " + matchedAttr)
 
     if ( matchedAttr === "true" ) {
 
       selections.push( $(this).text().trim().toLowerCase() )
     }
   })
-  console.log("selections:",selections)
+  // console.log("selections:",selections)
 
   //Check to see if the user made any selections before doing any more work.
   if ( selections.length === 0 ) {
@@ -135,7 +135,7 @@ $(".getRecipes").click( function() {
     $("#recipeResults").html("")
 
     let request = { cook: JSON.stringify(selections), title: "API Request", userID: userID }
-    console.log("request:",request)
+    // console.log("request:",request)
 
 
     //Send Two AJAX requests, one to store the ingredients that were searched for and one for getting the recipes.
@@ -144,7 +144,7 @@ $(".getRecipes").click( function() {
       method: "POST",
       data: request
     }).then( function(response) {
-      console.log("search stored!")
+      // console.log("search stored!")
     })
 
     $.ajax({
@@ -153,10 +153,10 @@ $(".getRecipes").click( function() {
       data: request
     }).then( function (response) {
 
-      console.log("api response: ",response)
+      // console.log("api response: ",response)
 
       userIngredients = response[0]
-      console.log("user ingredients: ",userIngredients)
+      // console.log("user ingredients: ",userIngredients)
 
       for ( let i=1; i<response.length; i++ ) {
 
@@ -180,7 +180,7 @@ $(".getRecipes").click( function() {
         
 
         ingredientStorage.push(ingredientArray)
-        console.log(ingredientStorage)
+        // console.log(ingredientStorage)
         
         //Build the list of recipe results dynamically
            wrapper.addClass("apiRecipe")
@@ -243,18 +243,18 @@ $(".getRecipes").click( function() {
                 counter = 0
 
             //Calculate the calories per serving and time for the recipe
-            console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
+            // console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
 
             calories = (calories/servings).toFixed(0)
-            console.log("calories/serving:",calories)
+            // console.log("calories/serving:",calories)
 
             if ( time === 0 ) { time = "Cooking Time Not Available. Check Recipe Website." } else { time = "Ready in " + time + " minutes."}
 
             let compareIngredients = function() {
                 if ( counter < recipeIngredients.length ) {
 
-                  console.log("user ingredient: ",userIngredients[counter])
-                  console.log("counter: ",counter)
+                  // console.log("user ingredient: ",userIngredients[counter])
+                  // console.log("counter: ",counter)
       
                   for ( let i=0; i<recipeIngredients.length; i++ ) {
 
@@ -313,10 +313,10 @@ $(".storeRecipes").click( function() {
           favorite = {
             label: $("p[data-id=" + id + "]").text(),
             image: $("img[data-id=" + id + "]").attr("src"),
-            url: $("button[data-id=" + id + "]").attr("data-src"),
-            servings: $("button[data-id=" + id + "]").attr("data-servings"),
-            time: $("button[data-id=" + id + "]").attr("data-time"),
-            calories: $("button[data-id=" + id + "]").attr("data-calories"),
+            url: $("img[data-id=" + id + "]").attr("data-src"),
+            servings: $("img[data-id=" + id + "]").attr("data-servings"),
+            time: $("img[data-id=" + id + "]").attr("data-time"),
+            calories: $("img[data-id=" + id + "]").attr("data-calories"),
             ingredients: ingredientStorage[id],
             UserID: userID
             
@@ -326,7 +326,7 @@ $(".storeRecipes").click( function() {
     }
   }
 
-  console.log("recipeArray: ",recipeArray)
+  // console.log("recipeArray: ",recipeArray)
 
   //Check to see if the user made any selections before doing any more work.
   if ( recipeArray.length === 0 ) {
@@ -336,7 +336,7 @@ $(".storeRecipes").click( function() {
     $(".storeError").html("")
 
     let request = { save: JSON.stringify(recipeArray), title: "API Request" }
-    console.log(request)
+    // console.log(request)
 
     $.ajax({ url: "/api/store-recipe/",
             method: "POST",
@@ -358,15 +358,15 @@ $(".storeRecipes").click( function() {
 //*-----------------------------------Event Listener for removing a Recipe----------------------------------
 $(".removeRecipe").click( function() {
 
-  console.log(".removeRecipe clicked")
+  // console.log(".removeRecipe clicked")
 
   let recipeID = $(this).attr("data-remove"),
       recipeName = $("#"+recipeID).text(),
       removeURL = "/api/remove-recipe/" + recipeID
 
-  console.log("recipeID: ",recipeID)
-  console.log("recipeName: ",recipeName)
-  console.log("removeUrl: ",removeURL)
+  // console.log("recipeID: ",recipeID)
+  // console.log("recipeName: ",recipeName)
+  // console.log("removeUrl: ",removeURL)
   $.ajax({
     url: removeURL,
     method: "DELETE"
@@ -391,10 +391,10 @@ $(".openSavedRecipe").click( function() {
       recipeImage = $("img[data-id=" + recipeID + "]").attr("src")
 
   //Calculate the calories per serving and time for the recipe
-  console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
+  // console.log("calories:",calories, "servings:",servings, "time:",time, "minutes")
 
   calories = (calories/servings).toFixed(0)
-  console.log("calories/serving:",calories)
+  // console.log("calories/serving:",calories)
 
   if ( time === 0 ) { time = "Cooking Time Not Available. Check Recipe Website." } else { time = "Ready in " + time + " minutes."}
   
@@ -404,7 +404,7 @@ $(".openSavedRecipe").click( function() {
     data: { id: recipeID }
   }).then( function(response) {
 
-    console.log(response)
+    // console.log(response)
     let ingredientList = ""
 
     for ( let i=0; i<response.length; i++ ) {
@@ -435,7 +435,7 @@ $(".openSavedRecipe").click( function() {
 $(".modal-recipe").click( function() {
 
   let url = $(this).attr("data-src")
-  window.open( url, "_blank" )
+  // window.open( url, "_blank" )
 })
 
 $(".modal-close").click( function() {
