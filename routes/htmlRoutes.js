@@ -41,62 +41,69 @@ module.exports = function(app) {
           let groupArray = [],
               initialArray = [],
               toggle = false
-
-          initialArray.push(result.rows[0].label)
-          topIngredients.push({total: result.count})
-          groupArray.push(initialArray)
-
-          for ( let i=1; i<result.rows.length; i++ )  {
-
-            for ( let j=0; j<groupArray.length; j++ ) {
-              
-              if ( groupArray[j].includes( result.rows[i].label ) ) {
-
-                groupArray[j].push(result.rows[i].label)
-                toggle = true
-              } 
-            }
-
-            if ( toggle == true ) { 
-              
-              toggle = false
-            } else {
-
-              let newArray = []
-              newArray.push(result.rows[i].label)
-              groupArray.push(newArray)
-              sortedIngredients = groupArray
-            }
-          }
-          // console.log("\n")
-          // console.log("group array:",groupArray)
-          // console.log("\n")
-
-        }).then( function() {        
-
-          //Now prepare the the most popular ingredients data to send to the page.
-          let ingredientScores = []
-
-          for ( let k=0; k<sortedIngredients.length; k++ ) {
-
-            ingredientScores.push(sortedIngredients[k].length)
-            // console.log("scores: ",ingredientScores)
-          }
-
-          for ( let m=0; m<4; m++ ) {
-
-            let max = Math.max(...ingredientScores),
-                index = ingredientScores.indexOf(max),
-                percentage = (((max/topIngredients[0].total)*100).toFixed(0) + "%" ),
-                winner = { percent: percentage, count: max, label: sortedIngredients[index][0] }
           
-            topIngredients.push(winner)
-            ingredientScores.splice(index,1,0)
+          if ( result.length > 0 ) {
+
+          
+
+            initialArray.push(result.rows[0].label)
+            topIngredients.push({total: result.count})
+            groupArray.push(initialArray)
+
+            for ( let i=1; i<result.rows.length; i++ )  {
+
+              for ( let j=0; j<groupArray.length; j++ ) {
+                
+                if ( groupArray[j].includes( result.rows[i].label ) ) {
+
+                  groupArray[j].push(result.rows[i].label)
+                  toggle = true
+                } 
+              }
+
+              if ( toggle == true ) { 
+                
+                toggle = false
+              } else {
+
+                let newArray = []
+                newArray.push(result.rows[i].label)
+                groupArray.push(newArray)
+                sortedIngredients = groupArray
+              }
+            }
+
+            //Now prepare the the most popular ingredients data to send to the page.
+            let ingredientScores = []
+
+            for ( let k=0; k<sortedIngredients.length; k++ ) {
+
+              ingredientScores.push(sortedIngredients[k].length)
+              // console.log("scores: ",ingredientScores)
+            }
+
+            for ( let m=0; m<4; m++ ) {
+
+              let max = Math.max(...ingredientScores),
+                  index = ingredientScores.indexOf(max),
+                  percentage = (((max/topIngredients[0].total)*100).toFixed(0) + "%" ),
+                  winner = { percent: percentage, count: max, label: sortedIngredients[index][0] }
+            
+              topIngredients.push(winner)
+              ingredientScores.splice(index,1,0)
+            }
+            console.log("\n")
+            console.log("top ingredients:",topIngredients)
+            console.log("\n")
+            topIngredients.splice(0,1)
           }
-          console.log("\n")
-          console.log("top ingredients:",topIngredients)
-          console.log("\n")
-          topIngredients.splice(0,1)
+            // console.log("\n")
+            // console.log("group array:",groupArray)
+            // console.log("\n")
+
+          }).then( function() {        
+
+            
           //these exist in {{ in app. handlebars}}
           res.render("app", {
             user: userName,
