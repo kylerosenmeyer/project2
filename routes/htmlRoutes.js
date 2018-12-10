@@ -34,7 +34,7 @@ module.exports = function(app) {
       let popularity = function(results) {
 
         let userName = results.name
-        console.log("username:",userName)
+        // console.log("username:",userName)
 
         db.Search.findAndCountAll({}).then(result => {
           
@@ -42,7 +42,7 @@ module.exports = function(app) {
               initialArray = [],
               toggle = false
 
-          console.log("result:",result)
+          // console.log("result:",result)
           
           if ( result.count > 0 ) {
 
@@ -52,7 +52,7 @@ module.exports = function(app) {
             topIngredients.push({total: result.count})
             groupArray.push(initialArray)
 
-            console.log("groupArray:",groupArray)
+            // console.log("groupArray:",groupArray)
 
             for ( let i=1; i<result.rows.length; i++ )  {
 
@@ -60,7 +60,7 @@ module.exports = function(app) {
                 
                 if ( groupArray[j].includes( result.rows[i].label ) ) {
 
-                  console.log("found:",result.rows[i].label)
+                  // console.log("found:",result.rows[i].label)
                   groupArray[j].push(result.rows[i].label)
                   toggle = true
                  
@@ -73,12 +73,12 @@ module.exports = function(app) {
                 let newArray = []
                   newArray.push(result.rows[i].label)
                   groupArray.push(newArray)
-                  console.log("new:",result.rows[i].label)
+                  // console.log("new:",result.rows[i].label)
               }
             }
 
             sortedIngredients = groupArray
-            console.log("sorted ingredients:",sortedIngredients)
+            // console.log("sorted ingredients:",sortedIngredients)
 
             //Now prepare the the most popular ingredients data to send to the page.
             let ingredientScores = []
@@ -86,7 +86,7 @@ module.exports = function(app) {
             for ( let k=0; k<sortedIngredients.length; k++ ) {
 
               ingredientScores.push(sortedIngredients[k].length)
-              console.log("scores: ",ingredientScores)
+              // console.log("scores: ",ingredientScores)
             }
 
             for ( let m=0; m<4; m++ ) {
@@ -99,9 +99,9 @@ module.exports = function(app) {
               topIngredients.push(winner)
               ingredientScores.splice(index,1,0)
             }
-            console.log("\n")
-            console.log("top ingredients:",topIngredients)
-            console.log("\n")
+            // console.log("\n")
+            // console.log("top ingredients:",topIngredients)
+            // console.log("\n")
             topIngredients.splice(0,1)
           }
             // console.log("\n")
@@ -110,7 +110,7 @@ module.exports = function(app) {
 
           }).then( function() {        
 
-            
+            // console.log("results:recipes:",results.Recipes)
           //these exist in {{ in app. handlebars}}
           res.render("app", {
             user: userName,

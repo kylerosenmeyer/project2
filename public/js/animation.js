@@ -1,5 +1,5 @@
 //Green Sock Animation Content Goes Here.
-console.log("animation.js loaded")
+// console.log("animation.js loaded")
 
 let width = window.innerWidth,
     height = window.innerHeight,
@@ -69,36 +69,3 @@ $(".error404SVG").attr("viewBox", padding404H + " " + padding404V + " " + width 
 TweenMax.to(".error404Path", 0.5, {css:{strokeOpacity:"1"}})
 TweenMax.fromTo(".error404Path", 40, {drawSVG:"0%"}, {drawSVG: "100%", onComplete: shrinkCover()} )
 
-
-
-//*-----------------------------------------------Resizing Section for Recipe Favorites---------------------------------------------------
-
-$(".recipeDropDown").click( function() {
-
-    let widthCheck = window.innerWidth
-
-    console.log("width check:",widthCheck)
-
-    if ( widthCheck > 980 ) {
-
-        $(".flexColumn").removeClass("col-2").addClass("col-1")
-        $(".emptyFlexColumn").removeClass("col-2").addClass("col-4")
-
-    } else if ( !$(".flexColumn").hasClass("col-2") ) {
-
-        $(".flexColumn").removeClass("col-1").addClass("col-2")
-        $(".emptyFlexColumn").removeClass("col-4").addClass("col-2")
-    }
-})
-
-
-
-
-
-
-//*-----------------------------------------------Resizing Section Step 1 and Step 2 Override for Bootstrap---------------------------------------------------
-
-// console.log(width)
-// if ( width <= 1000 ) {
-//     $(".step1, .step2").css({"display":"block", "width": width})
-// }

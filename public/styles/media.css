@@ -1,4 +1,9 @@
 @media only screen and ( max-width: 768px ) {
+
+    modal {
+        width: 80%;
+    }
+    
     .apiRecipe {
         width: 46%;
         border: 5px solid #ffffff;
@@ -9,12 +14,6 @@
         position: relative;
         background-color: #ffffff;
         color: #0a0a0a;
-    }
-
-    .favsRow {
-        width: 110%;
-        padding-right: 30px;
-        padding-bottom: 50px;
     }
 
     footer p {
@@ -29,6 +28,11 @@
 
 
 @media only screen and ( max-width: 500px ) {
+
+    modal {
+        width: 90%;
+    }
+
     .apiRecipe {
         width: 100%;
         border: 5px solid #ffffff;
