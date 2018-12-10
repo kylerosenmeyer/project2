@@ -11,9 +11,10 @@
         color: #0a0a0a;
     }
 
-    .recipeLabel {
-        font-size: 0.8em;
-        margin-left: 5px;
+    .favsRow {
+        width: 110%;
+        padding-right: 30px;
+        padding-bottom: 50px;
     }
 
     footer p {
@@ -38,21 +39,6 @@
         position: relative;
         background-color: #ffffff;
         color: #0a0a0a;
-    }
-
-    .recipeLabel {
-        font-size: 0.9em;
-        padding-left: 0px;
-        padding-bottom: 10px;
-        
-    }
-
-    .labelRow {
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right: 0px;
-        height: auto;
     }
 
     footer p {

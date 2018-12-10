@@ -37,84 +37,94 @@
 
 <div class="container-fluid mainWrapper">
 
+    {{!--Page Header--}}
     <div class="row titleRow">
-        <div class="col-12">
+        <div class="col-md-12">
                 <img class="logoTitle" src="/images/PNG/logo.png">
                 <p id="userName" data-userid="{{userID}}">Welcome, {{user}}!</p>
         </div>
     </div>      
 
+    {{!--Step 1 and Step 2--}}
     <div class="row">
-        <div class="col-md-4 ingredients">
+
+        {{!--Step 1--}}
+        <div class="col-md-4 step1">
             <p class="stepText">Step 1. Add and mark the ingredients you have.</p>
-        <div class="row">
-            <div class="col-12">
-                <input type="text" class="newIngredient" placeholder="Add Ingredient">
-                <button type="button" class="addIngredient"><i class="fas fa-plus"></i></button>
-            </div>
-        </div>
-        
-        <div class="row tableHead">
-            <div class="col-8">
-                <p>Popular Ingredients</p>
-            </div>
-            <div class="col-2">
-                <p class="ingredientHeader"><i class="fas fa-check"></i></p>
-            </div>
-            <div class="col-2">
-                <p><i class="fas fa-chart-pie"></i></p>
-            </div>
-        </div>
-    
-        {{#each Popular}}
+
+            {{!--Step 1 Sub Row Add Ingredients--}}
             <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="newIngredient" placeholder="Add Ingredient">
+                    <button type="button" class="addIngredient"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            {{!--Step 1 Sub Row Popular Ingredient Title--}}
+            <div class="row tableHead">
                 <div class="col-8">
-                    <p class="ingredient" data-id={{label}}>  {{label}}  </p>
+                    <p class="description">Popular Ingredients</p>
                 </div>
                 <div class="col-2">
-                    <button type="button" data-use="false" class="useIngredient notused {{label}}"><i class="fas fa-check"></i></button>
+                    <p class="ingredientHeader"><i class="fas fa-check"></i></p>
                 </div>
                 <div class="col-2">
-                    <p class="popPercent">{{percent}}</p>
+                    <p><i class="fas fa-chart-pie pieHeader"></i></p>
                 </div>
-                
             </div>
-        {{/each}}
 
-        <br>
+            {{!--Step 1 Sub Rows for Each Popular Ingredient--}}
+            {{#each Popular}}
+                <div class="row">
+                    <div class="col-8">
+                        <p class="ingredient" data-id={{label}}>  {{label}}  </p>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" data-use="false" class="useIngredient notused {{label}}"><i class="fas fa-check"></i></button>
+                    </div>
+                    <div class="col-2">
+                        <p class="popPercent">{{percent}}</p>
+                    </div>
+                    
+                </div>
+            {{/each}}
 
-        <div class="row tableHead">
-            <div class="col-8">
-                <p>Custom Ingredients</p>
-            </div>
-            <div class="col-2">
-                <p class="ingredientHeader"><i class="fas fa-check"></i></p>
-            </div>
-            <div class="col-2">
-                <p class="ingredientHeader2"><i class="fas fa-trash"></i></p>
-            </div>
-        </div>   
-                
-        {{#each Ingredient}}
-            <div class="row">
+            <br>
+            {{!--Step 1 Sub Row Custom Ingredient Title--}}
+            <div class="row tableHead">
                 <div class="col-8">
-                    <p class="ingredient" data-id={{id}} id={{id}}>{{label}}</p>
+                    <p class="description">Custom Ingredients</p>
                 </div>
                 <div class="col-2">
-                    <button type="button" data-use="{{used}}" class="useIngredient notused {{id}}"><i class="fas fa-check"></i></button>
+                    <p class="ingredientHeader"><i class="fas fa-check"></i></p>
                 </div>
                 <div class="col-2">
-                    <button type="button" data-remove="{{id}}" class="removeIngredient"><i class="fas fa-trash"></i></button>
+                    <p class="ingredientHeader2"><i class="fas fa-trash"></i></p>
                 </div>
-            </div>
-        {{/each}}
-    
-    </div>
+            </div>   
+            
+            {{!--Step 1 Sub Rows for each Custom Ingredient--}}
+            {{#each Ingredient}}
+                <div class="row">
+                    <div class="col-8">
+                        <p class="ingredient" data-id={{id}} id={{id}}>{{label}}</p>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" data-use="{{used}}" class="useIngredient notused {{id}}"><i class="fas fa-check"></i></button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" data-remove="{{id}}" class="removeIngredient"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
 
-    <div class="col-md-8 step2">
-        <p class="stepText">Step 2. Get the recipes.</p>
-       <button class="getRecipes">Get Recipes</button>
-       <div class="container" id="recipeResults"></div>
+        {{!--Step 2--}}
+        <div class="col-md-8 step2">
+            <p class="stepText">Step 2. Get the recipes.</p>
+            <button class="getRecipes">Get Recipes</button>
+            <div class="container" id="recipeResults"></div>
+        </div>
+
     </div>
 
     <div class="row favsRow">

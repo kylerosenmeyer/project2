@@ -171,8 +171,7 @@ $(".getRecipes").click( function() {
             wrapper = $("<div>"),
             row = $("<div>"),
             bigColumn = $("<div>"),
-            smallColumn1 = $("<div>"),
-            smallColumn2 = $("<div>"),
+            smallColumn = $("<div>"),
             img = $("<img>"),
             p = $("<p>"),
             openButton = $("<button type=\"button\"><i class=\"fas fa-box-open\"></i> </button>"),
@@ -184,19 +183,16 @@ $(".getRecipes").click( function() {
         console.log(ingredientStorage)
         
         //Build the list of recipe results dynamically
-          wrapper.addClass("apiRecipe")
-              row.addClass("row labelRow")
-        bigColumn.addClass("col-7 labelColumn")
-      smallColumn1.addClass("col-2 buttonColumn")
-      smallColumn2.addClass("col-2 buttonColumn")
-                p.addClass("recipeLabel")
+           wrapper.addClass("apiRecipe")
+               row.addClass("labelRow")
+         bigColumn.addClass("labelColumn")
+       smallColumn.addClass("buttonColumn")
+                 p.addClass("recipeLabel")
                   .attr("data-id", index)
                   .text(label)
-              img.addClass("recipeImg")
+              img.addClass("recipeImg openRecipe")
                   .attr("data-id", index)
                   .attr("src", image)
-        openButton.addClass("openRecipe")
-                  .attr("data-id", index)
                   .attr("data-src", url)
                   .attr("data-calories", calories)
                   .attr("data-servings", servings)
@@ -207,9 +203,8 @@ $(".getRecipes").click( function() {
 
 
         bigColumn.append(p)
-        smallColumn1.append(openButton)
-        smallColumn2.append(saveButton)
-        row.append(bigColumn, smallColumn1, smallColumn2)
+        smallColumn.append(saveButton)
+        row.append(smallColumn, bigColumn)
         wrapper.append(img, row)
         $("#recipeResults").append(wrapper)  
       }
