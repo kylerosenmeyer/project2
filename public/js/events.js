@@ -445,7 +445,7 @@ $(".openSavedRecipe").click( function() {
 $(".modal-recipe").click( function() {
 
   let url = $(this).attr("data-src")
-  // window.open( url, "_blank" )
+  window.open( url, "_blank" )
 })
 
 $(".modal-close").click( function() {
