@@ -8,11 +8,13 @@ module.exports = function(app) {
   }
 
   //*This Loads the Home Page, index.handlebars
+  //!ROUTE
   app.get("/", function(req, res) {
       res.render("index")
   })
 
   //*This Loads the Main App Page, app.handlebars
+  //!ROUTE
   app.get("/kitchen/:email", function(req, res) {
 
     //valideEmail is a function taken from stackOverflow.
@@ -27,8 +29,6 @@ module.exports = function(app) {
     //Check if the email paramater is valid before doing anymore work. If True, display the rest of the app.handlebars page. If false, display the error page.
     if ( validate(email) ) {
 
-    
-    
       // console.log("email: ",email)
       //Popularity is a function to get the searches out of the database and count/organize them.
       let popularity = function(results) {
@@ -136,6 +136,7 @@ module.exports = function(app) {
   })
 
   //*This loads the Error Page, 404.handlebars
+  //!ROUTE
   app.get("*", function(req, res) {
 
     errorPage(res)

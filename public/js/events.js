@@ -40,11 +40,13 @@ $(".loginBtn").click( function() {
       nextPage = "/kitchen/" + email
 
   // console.log("newUser:", newUser)
+  //!ROUTE: Find or add user.
   $.ajax({
     url: "/api/users",
     method: "POST",
     data: newUser
     // this refreshes the page and makes the login button load the next page
+    //!By changing the location to "nextPage", trigter another route.
   }).then( function() { location.href = nextPage } )
 })
 
@@ -63,10 +65,12 @@ $(".addIngredient").click( function() {
       newIngredient = { label: ingredientName, UserID: userID }
 
   // console.log("newIngredient:", newIngredient)
+  //!ROUTE Add new ingredient
   $.ajax({
     url: "/api/add-ingredient/",
     method: "POST",
     data: newIngredient
+    //!ROUTE: Reload current page.
   }).then( function() { location.reload() } )
 })
 
@@ -88,9 +92,11 @@ $(".removeIngredient").click( function() {
   // console.log("ingredientID: ",ingredientID)
   // console.log("ingredientName: ",ingredientName)
   // console.log("removeUrl: ",removeURL)
+  //!ROUTE: Delete Ingredient
   $.ajax({
     url: removeURL,
     method: "DELETE"
+    //!ROUTE: Reload current page.
   }).then( function() { location.reload() } )
 })
 
@@ -113,6 +119,7 @@ $(".getRecipes").click( function() {
   let selections = [],
       userID = $("#userName").attr("data-userid")
 
+  //Loop through all the ingredients and check whether they have been toggled or not.
   $(".ingredient").each( function() {
 
     let buttonClass = "." + $(this).attr("data-id"),
@@ -139,6 +146,7 @@ $(".getRecipes").click( function() {
 
 
     //Send Two AJAX requests, one to store the ingredients that were searched for and one for getting the recipes.
+    //!ROUTE: Store user search.
     $.ajax({
       url: "/api/store-search/",
       method: "POST",
@@ -147,12 +155,13 @@ $(".getRecipes").click( function() {
       // console.log("search stored!")
     })
 
+    //!ROUTE: Trigger Recipe API.
     $.ajax({
       url: "/api/get-recipes/",
       method: "POST",
       data: request
     }).then( function (response) {
-
+      //Take the api response and generate the dynamic cards that display the recipes.
       // console.log("api response: ",response)
 
       userIngredients = response[0]
@@ -174,7 +183,6 @@ $(".getRecipes").click( function() {
             smallColumn = $("<div>"),
             img = $("<img>"),
             p = $("<p>"),
-            openButton = $("<button type=\"button\"><i class=\"fas fa-box-open\"></i> </button>"),
             saveButton = $("<button type=\"button\"><i class=\"fas fa-heart saveHeart\"></i></button>")
             
         
@@ -250,6 +258,7 @@ $(".getRecipes").click( function() {
 
             if ( time === 0 ) { time = "Cooking Time Not Available. Check Recipe Website." } else { time = "Ready in " + time + " minutes."}
 
+            //The Compare Ingredients using a recursive function.
             let compareIngredients = function() {
                 if ( counter < recipeIngredients.length ) {
 
@@ -269,7 +278,7 @@ $(".getRecipes").click( function() {
                   compareIngredients()
                 }
             }
-
+            //Start the recursive function.
             compareIngredients()
 
             for ( let i=0; i<recipeIngredients.length; i++ ) {
@@ -300,7 +309,7 @@ $(".getRecipes").click( function() {
 
 //*--------------------------------Event Listener for storing favorited recipes------------------------------
 $(".storeRecipes").click( function() {
-
+  
   let hearts = document.getElementsByClassName("saveRecipe"),
       recipeArray = [],
       userID = $("#userName").attr("data-userid")
@@ -337,10 +346,11 @@ $(".storeRecipes").click( function() {
 
     let request = { save: JSON.stringify(recipeArray), title: "API Request" }
     // console.log(request)
-
+    //!ROUTE: Save Recipes
     $.ajax({ url: "/api/store-recipe/",
             method: "POST",
             data: request
+            //!ROUTE: Reload current page.
             }).then( (function() { location.reload() } ) )
   }
 })

@@ -3,8 +3,10 @@ const
     axios = require("axios")
 
 module.exports = function(app) {
+
   
   //*This is the route to either add or find a User
+  //!ROUTE
   app.post("/api/users", function(req, res) {
 
     let data = req.body
@@ -18,6 +20,7 @@ module.exports = function(app) {
   })
 
   //*This is the route to add an Ingredient to a User's list
+  //!ROUTE
   app.post("/api/add-ingredient/", function(req, res) {
 
     let data = req.body
@@ -28,7 +31,13 @@ module.exports = function(app) {
                  .then( function(result) { res.json(result) } )
   })
 
+
+
+
+
+
   //*This is the route to remove an Ingredient from a User's List
+  //!ROUTE
   app.delete("/api/remove-ingredient/:ingredient", function(req, res) {
 
     let ingredient = req.params.ingredient
@@ -41,7 +50,13 @@ module.exports = function(app) {
                           })
   })
 
+
+
+
+
+
   //*This is the route to get the recipes from the api
+  //!ROUTE
   app.post("/api/get-recipes/", function(req, res) {
 
     //Build the api query. First build the q parameter
@@ -110,7 +125,13 @@ module.exports = function(app) {
           }).catch( function (error) { console.log(error) } )
   })
 
+
+
+
+
+
   //*This is the route to store the ingredients searched by the user.
+  //!ROUTE
   app.post("/api/store-search/", function(req, res) {
 
     let data = JSON.parse(req.body.cook)
@@ -129,7 +150,12 @@ module.exports = function(app) {
     storeSearch(data)
   })
 
+
+
+
+
   //*This is the route to store a Recipe to the User's list
+  //!ROUTE
   app.post("/api/store-recipe/", function(req, res) {
 
     
@@ -164,7 +190,13 @@ module.exports = function(app) {
     res.end()
   })
 
+
+
+
+
+
   //*This is the route to remove a Recipe from a User's List
+  //!ROUTE
   app.delete("/api/remove-recipe/:recipeID", function(req, res) {
 
     let recipe = req.params.recipeID
@@ -173,7 +205,13 @@ module.exports = function(app) {
              .then( function(result) { res.json(result) } )
   })
 
+
+
+
+
+
   //*This is the route that grabs a recipe's saved ingredients.
+  //!ROUTE
   app.post("/api/get-saved-ingredients/", function(req, res) {
 
     let id = req.body.id
@@ -192,7 +230,5 @@ module.exports = function(app) {
                         res.send(response)
                        })
   })
-
-
-
+  
 }
