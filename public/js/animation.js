@@ -14,17 +14,18 @@ $("#logoSVG").attr("viewBox", widthPadding + " " + heightPadding + " " + width +
 
 $(".loginBtn").css({ "margin": "10px auto " + height + "px"})
 
+//This function transistions the page to the login inputs at the end of the animation.
 let shrinkCover = function() {
 
     TweenMax.to(".svgWrapper", 2, { 
-        css: { height: "20%" }, 
+        css: { height: "30%" }, 
         delay: 4, 
         ease: Power1.easeIn } )
 
     TweenMax.to("#logoSVG", 2, { 
         attr: { 
-            viewBox: widthPadding + " 0 " + width*2 + " " + height/9, 
-            height: height/5 }, 
+            viewBox: widthPadding + " 0 " + width + " " + height/6, 
+            height: height/4 }, 
         y:"-20", 
         delay: 4, 
         ease: Power1.easeIn } )
@@ -33,7 +34,7 @@ let shrinkCover = function() {
         css: { 
             backgroundColor:"#0e3b43", 
             display: "block", 
-            height: "80%"}, 
+            height: "70%"}, 
         delay: 4, 
         ease: Power1.easeIn } )
 

@@ -1,3 +1,5 @@
+/**---------------------------------------TABLETS-----------------------------------*/
+
 @media only screen and ( max-width: 768px ) {
 
     modal {
@@ -26,8 +28,26 @@
     }
 }
 
+/**---------------------------------------PHONES-----------------------------------*/
 
 @media only screen and ( max-width: 500px ) {
+
+    .choose {
+        width: 80%;
+      }
+      
+      .loginBtn {
+        background-color: #ffffff;
+        width: 60%;
+        padding: 10px 0px;
+        transition: width 1s, padding 1s, background-color 1s;
+      }
+      
+      .loginBtn:hover {
+        width: 80%;
+        border: 3px inset #a7e7ed;
+        background-color: #a7e7ed;
+      }
 
     modal {
         width: 90%;

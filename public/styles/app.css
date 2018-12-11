@@ -190,10 +190,8 @@ p.ingredient {
 
   .labelRow {
     width: 100%;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding: 0px;
+    margin: 0px;
     height: 35px;
     font-size: 1em;
   }
@@ -205,20 +203,20 @@ p.ingredient {
     margin: 0px;
     padding: 0px;
     width: 70%;
-    float:left;
+    display: inline-block;
   }
 
   .buttonColumn {
-    float: left;
     padding: 0px;
     margin: 0px;
     width: 20%;
+    float:left;
   }
 
   .recipeLabel {
     display: inline-block;
     font-size: 1em;
-    margin: 0px;
+    margin: 0px 10px 0px 0px;
     padding: 5px 0px 0px;
   }
 
@@ -226,7 +224,7 @@ p.ingredient {
     width: 100%;
     height: auto;
     display: block;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     filter: none;
     transition: filter 1s;
   }
@@ -242,7 +240,7 @@ p.ingredient {
   }
 
   .saved {
-    background-color: #ffffff;
+    background-color: #a7e7ed;
     border: 2px solid #ee8586;
     color: #ee8586;
   }
@@ -256,14 +254,14 @@ p.ingredient {
   }
 
   .notsaved {
-    background-color: white;
+    background-color: #ffffff;
     border: 2px solid #ee8586;
     color: #ffffff;
-    transition: color 0.75s;
+    transition: background-color 0.75s;
   }
 
   .notsaved:hover {
-    color: #ee8586
+    background-color: #a7e7ed;
   }
 
 

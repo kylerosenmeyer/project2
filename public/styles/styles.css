@@ -1,3 +1,5 @@
+/**--------------------General Styling--------------------------*/
+
 html, body {
   font-family: 'Acme', sans-serif;
   color: #0a0a0a;
@@ -34,13 +36,14 @@ button:hover, button:active, button:focus, details:focus, details:active, summar
   outline: none;
 }
 
-/**Cover SVG Section*/
+/**---------------------Cover SVG Section-----------------------*/
 .svgWrapper {
   overflow: hidden;
   height: 100%;
   width: 100%;
   padding: 0px;
   margin: 0px;
+  display: block;
   background-image: url("/images/PNG/frenchstucco.png");
 }
 
