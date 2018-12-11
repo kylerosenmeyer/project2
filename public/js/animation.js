@@ -25,7 +25,7 @@ let shrinkCover = function() {
     TweenMax.to("#logoSVG", 2, { 
         attr: { 
             viewBox: widthPadding + " 0 " + width + " " + height/6, 
-            height: height/4 }, 
+            height: height/2 }, 
         y:"-20", 
         delay: 4, 
         ease: Power1.easeIn } )
